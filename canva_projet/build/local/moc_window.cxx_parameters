@@ -1,0 +1,17 @@
+-I/home/work/modgeo/canva_projet/external/perlin
+-I/home/work/modgeo/canva_projet/lib3d
+-I/home/work/modgeo/canva_projet/libmesh
+-I/home/work/modgeo/canva_projet/libnavigation
+-I/home/work/modgeo/canva_projet/libperlin
+-I/home/work/modgeo/canva_projet/local
+-I/usr/include/qt4
+-I/usr/include/qt4/QtGui
+-I/usr/include/qt4/QtCore
+-I/usr/include
+-I/home/work/modgeo/canva_projet/build
+-DQT_NO_DEBUG
+-DQT_GUI_LIB
+-DQT_CORE_LIB
+-o
+/home/work/modgeo/canva_projet/build/local/moc_window.cxx
+/home/work/modgeo/canva_projet/local/window.hpp

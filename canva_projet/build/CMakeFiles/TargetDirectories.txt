@@ -1,0 +1,1 @@
+/home/work/modgeo/canva_projet/build/CMakeFiles/ensimag_synthese.dir
