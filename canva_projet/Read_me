@@ -1,0 +1,33 @@
+|======================================================================|
+|  Modélisation surfacique                                             |
+|  3A Ensimag                                                          |
+|  Base de code pour les projets                                       |
+|  par Ulysse Vimont                                                   |
+|  d'après un code de Damien Rohmer                                    |
+|======================================================================|
+
+Ce code propose une interface graphique contenant un contexte OpenGL dans Qt.
+
+Les fichiers que vous serez principalement amené à modifier sont :
+ - ./local/scene.hpp et ./local/scene.cpp pour éditer la scene
+ - ./libmesh/mesh.hpp et ./libmesh/mesh.cpp pour éditer la sctructure de sctockage de maillage
+
+Prenez le temps de comprendre le code, et n'hésitez pas à le modifier pour faire des tests.
+
+Pour l'utiliser, il vous faut (entre autre) :
+ - cmake (outil de compilation)
+ - Qt (interface graphique)
+ - OpenGl (visualisation de maillage)
+
+Pour l'utiliser, deux solutions:
+ - Dans un terminal, faites:
+cd build/
+cmake ..
+make
+./ensimag_projet
+
+ - ouvrez le fichier CMakeLists.txt avec QtCreator, puis configurez le pour qu'il crée le projet dans le répertoire buid/
+
+
+
+Si vous avez des questions : ulysse.vimont@inria.fr
