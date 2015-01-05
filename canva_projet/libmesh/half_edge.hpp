@@ -22,7 +22,7 @@ public:
     // ********************************************* //
     // ********************************************* //
 
-    /** \brief Accesor to */
+
 
 
     // ********************************************* //
@@ -49,16 +49,16 @@ private:
 
     /** Using pointers might save some time in destruction */
     /** \brief vertex */
-    v3& vert;
+    v3* vert;
     /** \brief facet */
-    facet& fct;
+    facet* fct;
     /** \brief opposite half-edge */
-    half_edge& opposite;
+    half_edge* opposite;
 
     /** \brief next half-edge */
-    half_edge& ccw;
+    half_edge* ccw;
     /** \brief previous half-edge */
-    half_edge& cw;
+    half_edge* cw;
 };
 }
 #endif // HALF_EDGE_HPP

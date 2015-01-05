@@ -11,8 +11,6 @@
 
 #include <assert.h>
 
-#include <faces.hpp>
-
 Window::Window(QWidget *parent)
   :QMainWindow(parent),ui(new Ui::MainWindow)
 {
@@ -66,7 +64,6 @@ Window::~Window()
 void Window::quit_window()
 {
   std::cout<<"Exit window"<<std::endl;
-  proj::faces f();
   this->window()->close();
 }
 

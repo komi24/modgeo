@@ -21,7 +21,7 @@ private:
     /** \brief Normal vector + shift */
     v4 q;
     /** \brief vertices */
-    v3& u1,u2,u3;
+    v3* u1,u2,u3;
 };
 }
 #endif // FACET_HPP
