@@ -16,10 +16,13 @@
 #include <QtGui/QCheckBox>
 #include <QtGui/QGridLayout>
 #include <QtGui/QHeaderView>
+#include <QtGui/QLCDNumber>
+#include <QtGui/QLabel>
 #include <QtGui/QMainWindow>
 #include <QtGui/QMenu>
 #include <QtGui/QMenuBar>
 #include <QtGui/QPushButton>
+#include <QtGui/QSlider>
 #include <QtGui/QStatusBar>
 #include <QtGui/QTabWidget>
 #include <QtGui/QVBoxLayout>
@@ -55,6 +58,7 @@ public:
     QWidget *centralwidget;
     QGridLayout *gridLayout;
     QVBoxLayout *layout_scene;
+    QVBoxLayout *verticalLayout_3;
     QVBoxLayout *verticalLayout_2;
     QTabWidget *tabWidget;
     QWidget *tab;
@@ -62,7 +66,12 @@ public:
     QGridLayout *gridLayout_2;
     QCheckBox *wireframe_checkbox;
     QPushButton *debug_button;
-    QVBoxLayout *verticalLayout_3;
+    QWidget *tab_2;
+    QSlider *slider_factor;
+    QLabel *label;
+    QPushButton *simple_algo_button;
+    QLCDNumber *lcd_factor;
+    QPushButton *optimized_algo_button;
     QMenuBar *menubar;
     QMenu *menuFile;
     QMenu *menuEdit;
@@ -133,6 +142,11 @@ public:
 
         gridLayout->addLayout(layout_scene, 0, 1, 2, 1);
 
+        verticalLayout_3 = new QVBoxLayout();
+        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
+
+        gridLayout->addLayout(verticalLayout_3, 1, 0, 1, 1);
+
         verticalLayout_2 = new QVBoxLayout();
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         tabWidget = new QTabWidget(centralwidget);
@@ -163,16 +177,36 @@ public:
         gridLayout_2->addWidget(debug_button, 1, 0, 1, 1);
 
         tabWidget->addTab(tab, QString());
+        tab_2 = new QWidget();
+        tab_2->setObjectName(QString::fromUtf8("tab_2"));
+        slider_factor = new QSlider(tab_2);
+        slider_factor->setObjectName(QString::fromUtf8("slider_factor"));
+        slider_factor->setGeometry(QRect(60, 40, 160, 29));
+        slider_factor->setAcceptDrops(false);
+        slider_factor->setMinimum(1);
+        slider_factor->setMaximum(1000);
+        slider_factor->setPageStep(100);
+        slider_factor->setOrientation(Qt::Horizontal);
+        label = new QLabel(tab_2);
+        label->setObjectName(QString::fromUtf8("label"));
+        label->setGeometry(QRect(70, 20, 141, 17));
+        simple_algo_button = new QPushButton(tab_2);
+        simple_algo_button->setObjectName(QString::fromUtf8("simple_algo_button"));
+        simple_algo_button->setGeometry(QRect(10, 130, 99, 27));
+        lcd_factor = new QLCDNumber(tab_2);
+        lcd_factor->setObjectName(QString::fromUtf8("lcd_factor"));
+        lcd_factor->setGeometry(QRect(100, 70, 64, 23));
+        lcd_factor->setSegmentStyle(QLCDNumber::Flat);
+        lcd_factor->setProperty("value", QVariant(1));
+        optimized_algo_button = new QPushButton(tab_2);
+        optimized_algo_button->setObjectName(QString::fromUtf8("optimized_algo_button"));
+        optimized_algo_button->setGeometry(QRect(130, 130, 121, 27));
+        tabWidget->addTab(tab_2, QString());
 
         verticalLayout_2->addWidget(tabWidget);
 
 
         gridLayout->addLayout(verticalLayout_2, 0, 0, 1, 1);
-
-        verticalLayout_3 = new QVBoxLayout();
-        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
-
-        gridLayout->addLayout(verticalLayout_3, 1, 0, 1, 1);
 
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
@@ -194,7 +228,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -228,6 +262,10 @@ public:
         wireframe_checkbox->setText(QApplication::translate("MainWindow", "Wireframe", 0, QApplication::UnicodeUTF8));
         debug_button->setText(QApplication::translate("MainWindow", "Debug", 0, QApplication::UnicodeUTF8));
         tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("MainWindow", "Viewer", 0, QApplication::UnicodeUTF8));
+        label->setText(QApplication::translate("MainWindow", "Simplification factor", 0, QApplication::UnicodeUTF8));
+        simple_algo_button->setText(QApplication::translate("MainWindow", "Simple Algo", 0, QApplication::UnicodeUTF8));
+        optimized_algo_button->setText(QApplication::translate("MainWindow", "Optimized Algo", 0, QApplication::UnicodeUTF8));
+        tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("MainWindow", "Simplification", 0, QApplication::UnicodeUTF8));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0, QApplication::UnicodeUTF8));
         menuEdit->setTitle(QApplication::translate("MainWindow", "Edit", 0, QApplication::UnicodeUTF8));
     } // retranslateUi

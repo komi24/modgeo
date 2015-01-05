@@ -34,6 +34,7 @@ namespace proj
     const std::vector<v3>& mesh::get_vertices() const{return v_vertices;}
     const std::vector<v3>& mesh::get_normal() const{return v_normal;}
     const std::vector<v3>& mesh::get_color() const{return v_color;}
+    /** TODO  update the connectivity with half edge structure if needed */
     const std::vector<int>& mesh::get_connectivity() const{return v_connectivity;}
 
     std::vector<v3>& mesh::get_vertices() {return v_vertices;}
@@ -264,6 +265,10 @@ namespace proj
 
     const int& mesh::connectivity(const unsigned int& index) const
     {
+        /** TODO  update the connectivity with half edge structure if needed */
+        /** TODO */
+        /** TODO */
+
         //check index
         if(index>=v_connectivity.size())
         {
@@ -276,6 +281,10 @@ namespace proj
     }
     int& mesh::connectivity(const unsigned int& index)
     {
+        /** TODO  update the connectivity with half edge structure if needed */
+        /** TODO */
+        /** TODO */
+
         //check index
         if(index>=v_connectivity.size())
         {
@@ -306,6 +315,10 @@ namespace proj
     void mesh::add_texture(const v2& texture_to_add){v_texture.push_back(texture_to_add);}
     void mesh::add_triangle(const int u0,const int u1,const int u2)
     {
+        /** TODO add triangle to the half-edge structure */
+        /** TODO */
+        /** TODO */
+        /** TODO */
         v_connectivity.push_back(u0);
         v_connectivity.push_back(u1);
         v_connectivity.push_back(u2);

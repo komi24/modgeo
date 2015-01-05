@@ -39,6 +39,8 @@ private slots:
   void quit_window();
   void set_wireframe(int is_active);
   void debug_button_clicked();
+  void simple_algo_button_clicked();
+  void optimized_algo_button_clicked();
 };
 
 #endif

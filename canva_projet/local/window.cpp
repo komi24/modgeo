@@ -11,6 +11,8 @@
 
 #include <assert.h>
 
+#include <faces.hpp>
+
 Window::Window(QWidget *parent)
   :QMainWindow(parent),ui(new Ui::MainWindow)
 {
@@ -36,6 +38,9 @@ Window::Window(QWidget *parent)
   connect(ui->actionExit,SIGNAL(triggered()),this,SLOT(quit_window()));
   connect(ui->wireframe_checkbox,SIGNAL(stateChanged(int)),this,SLOT(set_wireframe(int)));
   connect(ui->debug_button,SIGNAL(clicked()),this,SLOT(debug_button_clicked()));
+  connect(ui->simple_algo_button,SIGNAL(clicked()),this,SLOT(simple_algo_button_clicked()));
+  connect(ui->optimized_algo_button,SIGNAL(clicked()),this,SLOT(optimized_algo_button_clicked()));
+  connect(ui->slider_factor,SIGNAL(valueChanged(int)),ui->lcd_factor,SLOT(display(int)));
 }
 
 Window::~Window()
@@ -55,11 +60,13 @@ Window::~Window()
       delete p_debug_mesh;
       p_debug_mesh=NULL;
   }
+
 }
 
 void Window::quit_window()
 {
   std::cout<<"Exit window"<<std::endl;
+  proj::faces f();
   this->window()->close();
 }
 
@@ -71,6 +78,14 @@ void Window::set_wireframe(int is_active)
         glWidget->set_wireframe();
 }
 void Window::debug_button_clicked()
+{
+    window_debug->show();
+}
+void Window::simple_algo_button_clicked()
+{
+    window_debug->show();
+}
+void Window::optimized_algo_button_clicked()
 {
     window_debug->show();
 }

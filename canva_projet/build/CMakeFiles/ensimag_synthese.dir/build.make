@@ -327,9 +327,32 @@ CMakeFiles/ensimag_synthese.dir/libmesh/mesh_io.cpp.o.provides: CMakeFiles/ensim
 
 CMakeFiles/ensimag_synthese.dir/libmesh/mesh_io.cpp.o.provides.build: CMakeFiles/ensimag_synthese.dir/libmesh/mesh_io.cpp.o
 
+CMakeFiles/ensimag_synthese.dir/libmesh/faces.cpp.o: CMakeFiles/ensimag_synthese.dir/flags.make
+CMakeFiles/ensimag_synthese.dir/libmesh/faces.cpp.o: ../libmesh/faces.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/work/modgeo/canva_projet/build/CMakeFiles $(CMAKE_PROGRESS_17)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/ensimag_synthese.dir/libmesh/faces.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/ensimag_synthese.dir/libmesh/faces.cpp.o -c /home/work/modgeo/canva_projet/libmesh/faces.cpp
+
+CMakeFiles/ensimag_synthese.dir/libmesh/faces.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ensimag_synthese.dir/libmesh/faces.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/work/modgeo/canva_projet/libmesh/faces.cpp > CMakeFiles/ensimag_synthese.dir/libmesh/faces.cpp.i
+
+CMakeFiles/ensimag_synthese.dir/libmesh/faces.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ensimag_synthese.dir/libmesh/faces.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/work/modgeo/canva_projet/libmesh/faces.cpp -o CMakeFiles/ensimag_synthese.dir/libmesh/faces.cpp.s
+
+CMakeFiles/ensimag_synthese.dir/libmesh/faces.cpp.o.requires:
+.PHONY : CMakeFiles/ensimag_synthese.dir/libmesh/faces.cpp.o.requires
+
+CMakeFiles/ensimag_synthese.dir/libmesh/faces.cpp.o.provides: CMakeFiles/ensimag_synthese.dir/libmesh/faces.cpp.o.requires
+	$(MAKE) -f CMakeFiles/ensimag_synthese.dir/build.make CMakeFiles/ensimag_synthese.dir/libmesh/faces.cpp.o.provides.build
+.PHONY : CMakeFiles/ensimag_synthese.dir/libmesh/faces.cpp.o.provides
+
+CMakeFiles/ensimag_synthese.dir/libmesh/faces.cpp.o.provides.build: CMakeFiles/ensimag_synthese.dir/libmesh/faces.cpp.o
+
 CMakeFiles/ensimag_synthese.dir/libnavigation/navigator_tool.cpp.o: CMakeFiles/ensimag_synthese.dir/flags.make
 CMakeFiles/ensimag_synthese.dir/libnavigation/navigator_tool.cpp.o: ../libnavigation/navigator_tool.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/work/modgeo/canva_projet/build/CMakeFiles $(CMAKE_PROGRESS_17)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/work/modgeo/canva_projet/build/CMakeFiles $(CMAKE_PROGRESS_18)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/ensimag_synthese.dir/libnavigation/navigator_tool.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/ensimag_synthese.dir/libnavigation/navigator_tool.cpp.o -c /home/work/modgeo/canva_projet/libnavigation/navigator_tool.cpp
 
@@ -352,7 +375,7 @@ CMakeFiles/ensimag_synthese.dir/libnavigation/navigator_tool.cpp.o.provides.buil
 
 CMakeFiles/ensimag_synthese.dir/libnavigation/trackball.cpp.o: CMakeFiles/ensimag_synthese.dir/flags.make
 CMakeFiles/ensimag_synthese.dir/libnavigation/trackball.cpp.o: ../libnavigation/trackball.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/work/modgeo/canva_projet/build/CMakeFiles $(CMAKE_PROGRESS_18)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/work/modgeo/canva_projet/build/CMakeFiles $(CMAKE_PROGRESS_19)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/ensimag_synthese.dir/libnavigation/trackball.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/ensimag_synthese.dir/libnavigation/trackball.cpp.o -c /home/work/modgeo/canva_projet/libnavigation/trackball.cpp
 
@@ -375,7 +398,7 @@ CMakeFiles/ensimag_synthese.dir/libnavigation/trackball.cpp.o.provides.build: CM
 
 CMakeFiles/ensimag_synthese.dir/local/window.cpp.o: CMakeFiles/ensimag_synthese.dir/flags.make
 CMakeFiles/ensimag_synthese.dir/local/window.cpp.o: ../local/window.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/work/modgeo/canva_projet/build/CMakeFiles $(CMAKE_PROGRESS_19)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/work/modgeo/canva_projet/build/CMakeFiles $(CMAKE_PROGRESS_20)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/ensimag_synthese.dir/local/window.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/ensimag_synthese.dir/local/window.cpp.o -c /home/work/modgeo/canva_projet/local/window.cpp
 
@@ -398,7 +421,7 @@ CMakeFiles/ensimag_synthese.dir/local/window.cpp.o.provides.build: CMakeFiles/en
 
 CMakeFiles/ensimag_synthese.dir/local/scene.cpp.o: CMakeFiles/ensimag_synthese.dir/flags.make
 CMakeFiles/ensimag_synthese.dir/local/scene.cpp.o: ../local/scene.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/work/modgeo/canva_projet/build/CMakeFiles $(CMAKE_PROGRESS_20)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/work/modgeo/canva_projet/build/CMakeFiles $(CMAKE_PROGRESS_21)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/ensimag_synthese.dir/local/scene.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/ensimag_synthese.dir/local/scene.cpp.o -c /home/work/modgeo/canva_projet/local/scene.cpp
 
@@ -419,9 +442,32 @@ CMakeFiles/ensimag_synthese.dir/local/scene.cpp.o.provides: CMakeFiles/ensimag_s
 
 CMakeFiles/ensimag_synthese.dir/local/scene.cpp.o.provides.build: CMakeFiles/ensimag_synthese.dir/local/scene.cpp.o
 
+CMakeFiles/ensimag_synthese.dir/local/simplification.cpp.o: CMakeFiles/ensimag_synthese.dir/flags.make
+CMakeFiles/ensimag_synthese.dir/local/simplification.cpp.o: ../local/simplification.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/work/modgeo/canva_projet/build/CMakeFiles $(CMAKE_PROGRESS_22)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/ensimag_synthese.dir/local/simplification.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/ensimag_synthese.dir/local/simplification.cpp.o -c /home/work/modgeo/canva_projet/local/simplification.cpp
+
+CMakeFiles/ensimag_synthese.dir/local/simplification.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ensimag_synthese.dir/local/simplification.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/work/modgeo/canva_projet/local/simplification.cpp > CMakeFiles/ensimag_synthese.dir/local/simplification.cpp.i
+
+CMakeFiles/ensimag_synthese.dir/local/simplification.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ensimag_synthese.dir/local/simplification.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/work/modgeo/canva_projet/local/simplification.cpp -o CMakeFiles/ensimag_synthese.dir/local/simplification.cpp.s
+
+CMakeFiles/ensimag_synthese.dir/local/simplification.cpp.o.requires:
+.PHONY : CMakeFiles/ensimag_synthese.dir/local/simplification.cpp.o.requires
+
+CMakeFiles/ensimag_synthese.dir/local/simplification.cpp.o.provides: CMakeFiles/ensimag_synthese.dir/local/simplification.cpp.o.requires
+	$(MAKE) -f CMakeFiles/ensimag_synthese.dir/build.make CMakeFiles/ensimag_synthese.dir/local/simplification.cpp.o.provides.build
+.PHONY : CMakeFiles/ensimag_synthese.dir/local/simplification.cpp.o.provides
+
+CMakeFiles/ensimag_synthese.dir/local/simplification.cpp.o.provides.build: CMakeFiles/ensimag_synthese.dir/local/simplification.cpp.o
+
 CMakeFiles/ensimag_synthese.dir/local/glwidget.cpp.o: CMakeFiles/ensimag_synthese.dir/flags.make
 CMakeFiles/ensimag_synthese.dir/local/glwidget.cpp.o: ../local/glwidget.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/work/modgeo/canva_projet/build/CMakeFiles $(CMAKE_PROGRESS_21)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/work/modgeo/canva_projet/build/CMakeFiles $(CMAKE_PROGRESS_23)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/ensimag_synthese.dir/local/glwidget.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/ensimag_synthese.dir/local/glwidget.cpp.o -c /home/work/modgeo/canva_projet/local/glwidget.cpp
 
@@ -444,7 +490,7 @@ CMakeFiles/ensimag_synthese.dir/local/glwidget.cpp.o.provides.build: CMakeFiles/
 
 CMakeFiles/ensimag_synthese.dir/local/main.cpp.o: CMakeFiles/ensimag_synthese.dir/flags.make
 CMakeFiles/ensimag_synthese.dir/local/main.cpp.o: ../local/main.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/work/modgeo/canva_projet/build/CMakeFiles $(CMAKE_PROGRESS_22)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/work/modgeo/canva_projet/build/CMakeFiles $(CMAKE_PROGRESS_24)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/ensimag_synthese.dir/local/main.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/ensimag_synthese.dir/local/main.cpp.o -c /home/work/modgeo/canva_projet/local/main.cpp
 
@@ -467,7 +513,7 @@ CMakeFiles/ensimag_synthese.dir/local/main.cpp.o.provides.build: CMakeFiles/ensi
 
 CMakeFiles/ensimag_synthese.dir/local/debug_mesh.cpp.o: CMakeFiles/ensimag_synthese.dir/flags.make
 CMakeFiles/ensimag_synthese.dir/local/debug_mesh.cpp.o: ../local/debug_mesh.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/work/modgeo/canva_projet/build/CMakeFiles $(CMAKE_PROGRESS_23)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/work/modgeo/canva_projet/build/CMakeFiles $(CMAKE_PROGRESS_25)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/ensimag_synthese.dir/local/debug_mesh.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/ensimag_synthese.dir/local/debug_mesh.cpp.o -c /home/work/modgeo/canva_projet/local/debug_mesh.cpp
 
@@ -490,7 +536,7 @@ CMakeFiles/ensimag_synthese.dir/local/debug_mesh.cpp.o.provides.build: CMakeFile
 
 CMakeFiles/ensimag_synthese.dir/local/window_mesh_debug.cpp.o: CMakeFiles/ensimag_synthese.dir/flags.make
 CMakeFiles/ensimag_synthese.dir/local/window_mesh_debug.cpp.o: ../local/window_mesh_debug.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/work/modgeo/canva_projet/build/CMakeFiles $(CMAKE_PROGRESS_24)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/work/modgeo/canva_projet/build/CMakeFiles $(CMAKE_PROGRESS_26)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/ensimag_synthese.dir/local/window_mesh_debug.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/ensimag_synthese.dir/local/window_mesh_debug.cpp.o -c /home/work/modgeo/canva_projet/local/window_mesh_debug.cpp
 
@@ -513,7 +559,7 @@ CMakeFiles/ensimag_synthese.dir/local/window_mesh_debug.cpp.o.provides.build: CM
 
 CMakeFiles/ensimag_synthese.dir/local/moc_window.cxx.o: CMakeFiles/ensimag_synthese.dir/flags.make
 CMakeFiles/ensimag_synthese.dir/local/moc_window.cxx.o: local/moc_window.cxx
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/work/modgeo/canva_projet/build/CMakeFiles $(CMAKE_PROGRESS_25)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/work/modgeo/canva_projet/build/CMakeFiles $(CMAKE_PROGRESS_27)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/ensimag_synthese.dir/local/moc_window.cxx.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/ensimag_synthese.dir/local/moc_window.cxx.o -c /home/work/modgeo/canva_projet/build/local/moc_window.cxx
 
@@ -536,7 +582,7 @@ CMakeFiles/ensimag_synthese.dir/local/moc_window.cxx.o.provides.build: CMakeFile
 
 CMakeFiles/ensimag_synthese.dir/local/moc_glwidget.cxx.o: CMakeFiles/ensimag_synthese.dir/flags.make
 CMakeFiles/ensimag_synthese.dir/local/moc_glwidget.cxx.o: local/moc_glwidget.cxx
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/work/modgeo/canva_projet/build/CMakeFiles $(CMAKE_PROGRESS_26)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/work/modgeo/canva_projet/build/CMakeFiles $(CMAKE_PROGRESS_28)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/ensimag_synthese.dir/local/moc_glwidget.cxx.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/ensimag_synthese.dir/local/moc_glwidget.cxx.o -c /home/work/modgeo/canva_projet/build/local/moc_glwidget.cxx
 
@@ -559,7 +605,7 @@ CMakeFiles/ensimag_synthese.dir/local/moc_glwidget.cxx.o.provides.build: CMakeFi
 
 CMakeFiles/ensimag_synthese.dir/local/moc_window_mesh_debug.cxx.o: CMakeFiles/ensimag_synthese.dir/flags.make
 CMakeFiles/ensimag_synthese.dir/local/moc_window_mesh_debug.cxx.o: local/moc_window_mesh_debug.cxx
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/work/modgeo/canva_projet/build/CMakeFiles $(CMAKE_PROGRESS_27)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/work/modgeo/canva_projet/build/CMakeFiles $(CMAKE_PROGRESS_29)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/ensimag_synthese.dir/local/moc_window_mesh_debug.cxx.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/ensimag_synthese.dir/local/moc_window_mesh_debug.cxx.o -c /home/work/modgeo/canva_projet/build/local/moc_window_mesh_debug.cxx
 
@@ -593,10 +639,12 @@ ensimag_synthese_OBJECTS = \
 "CMakeFiles/ensimag_synthese.dir/libmesh/mesh.cpp.o" \
 "CMakeFiles/ensimag_synthese.dir/libmesh/opengl_drawer.cpp.o" \
 "CMakeFiles/ensimag_synthese.dir/libmesh/mesh_io.cpp.o" \
+"CMakeFiles/ensimag_synthese.dir/libmesh/faces.cpp.o" \
 "CMakeFiles/ensimag_synthese.dir/libnavigation/navigator_tool.cpp.o" \
 "CMakeFiles/ensimag_synthese.dir/libnavigation/trackball.cpp.o" \
 "CMakeFiles/ensimag_synthese.dir/local/window.cpp.o" \
 "CMakeFiles/ensimag_synthese.dir/local/scene.cpp.o" \
+"CMakeFiles/ensimag_synthese.dir/local/simplification.cpp.o" \
 "CMakeFiles/ensimag_synthese.dir/local/glwidget.cpp.o" \
 "CMakeFiles/ensimag_synthese.dir/local/main.cpp.o" \
 "CMakeFiles/ensimag_synthese.dir/local/debug_mesh.cpp.o" \
@@ -619,10 +667,12 @@ ensimag_synthese: CMakeFiles/ensimag_synthese.dir/lib3d/matrix2.cpp.o
 ensimag_synthese: CMakeFiles/ensimag_synthese.dir/libmesh/mesh.cpp.o
 ensimag_synthese: CMakeFiles/ensimag_synthese.dir/libmesh/opengl_drawer.cpp.o
 ensimag_synthese: CMakeFiles/ensimag_synthese.dir/libmesh/mesh_io.cpp.o
+ensimag_synthese: CMakeFiles/ensimag_synthese.dir/libmesh/faces.cpp.o
 ensimag_synthese: CMakeFiles/ensimag_synthese.dir/libnavigation/navigator_tool.cpp.o
 ensimag_synthese: CMakeFiles/ensimag_synthese.dir/libnavigation/trackball.cpp.o
 ensimag_synthese: CMakeFiles/ensimag_synthese.dir/local/window.cpp.o
 ensimag_synthese: CMakeFiles/ensimag_synthese.dir/local/scene.cpp.o
+ensimag_synthese: CMakeFiles/ensimag_synthese.dir/local/simplification.cpp.o
 ensimag_synthese: CMakeFiles/ensimag_synthese.dir/local/glwidget.cpp.o
 ensimag_synthese: CMakeFiles/ensimag_synthese.dir/local/main.cpp.o
 ensimag_synthese: CMakeFiles/ensimag_synthese.dir/local/debug_mesh.cpp.o
@@ -657,10 +707,12 @@ CMakeFiles/ensimag_synthese.dir/requires: CMakeFiles/ensimag_synthese.dir/lib3d/
 CMakeFiles/ensimag_synthese.dir/requires: CMakeFiles/ensimag_synthese.dir/libmesh/mesh.cpp.o.requires
 CMakeFiles/ensimag_synthese.dir/requires: CMakeFiles/ensimag_synthese.dir/libmesh/opengl_drawer.cpp.o.requires
 CMakeFiles/ensimag_synthese.dir/requires: CMakeFiles/ensimag_synthese.dir/libmesh/mesh_io.cpp.o.requires
+CMakeFiles/ensimag_synthese.dir/requires: CMakeFiles/ensimag_synthese.dir/libmesh/faces.cpp.o.requires
 CMakeFiles/ensimag_synthese.dir/requires: CMakeFiles/ensimag_synthese.dir/libnavigation/navigator_tool.cpp.o.requires
 CMakeFiles/ensimag_synthese.dir/requires: CMakeFiles/ensimag_synthese.dir/libnavigation/trackball.cpp.o.requires
 CMakeFiles/ensimag_synthese.dir/requires: CMakeFiles/ensimag_synthese.dir/local/window.cpp.o.requires
 CMakeFiles/ensimag_synthese.dir/requires: CMakeFiles/ensimag_synthese.dir/local/scene.cpp.o.requires
+CMakeFiles/ensimag_synthese.dir/requires: CMakeFiles/ensimag_synthese.dir/local/simplification.cpp.o.requires
 CMakeFiles/ensimag_synthese.dir/requires: CMakeFiles/ensimag_synthese.dir/local/glwidget.cpp.o.requires
 CMakeFiles/ensimag_synthese.dir/requires: CMakeFiles/ensimag_synthese.dir/local/main.cpp.o.requires
 CMakeFiles/ensimag_synthese.dir/requires: CMakeFiles/ensimag_synthese.dir/local/debug_mesh.cpp.o.requires

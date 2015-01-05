@@ -1,0 +1,4 @@
+I started developing in the canva folder.
+You can use qtcreator to open the CMakeList.txt but you might have difficulties
+to see the new files in development in the editor. Thus, you should take a look
+in folders like libmesh to add them in the project. (I don't know why they disapear)

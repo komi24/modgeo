@@ -98,8 +98,12 @@ class mesh
         void add_vertex(const v3& vertex_to_add);
         /** \brief Add a texture to the mesh */
         void add_texture(const v2& texture_to_add);
-        /** \brief Add a triangle to the mesh */
+        /** \brief Add a triangle to the mesh without updating connectivity
+            (updates half-edges) */
         void add_triangle(const int u0,const int u1,const int u2);
+
+        /** \brief Update connectivity order (triangle strip) */
+        void update_strip();
 
 
         // ********************************************* //
@@ -193,6 +197,15 @@ class mesh
         /** \brief load a off file */
         void load_file(const std::string &filename);
 
+        // ********************************************* //
+        // ********************************************* //
+        //  Simplification
+        // ********************************************* //
+        // ********************************************* //
+
+        /** \brief create a simplified mesh */
+        mesh& simplification(); //TODO
+
     private:
 
         // ********************************************* //
@@ -200,6 +213,8 @@ class mesh
         //  Internal data
         // ********************************************* //
         // ********************************************* //
+
+        // TODO Use of std::valarray instead of std::vector //
 
         /** \brief internal vertices storage */
         std::vector<v3> v_vertices;
@@ -212,6 +227,16 @@ class mesh
 
         /** \brief internal connectivity storage */
         std::vector<int> v_connectivity;
+        /** TODO triangle strip */
+        /** Is it more efficient to change the id number of vertices
+         * or to change the structure
+         * CHOSEN : structure change */
+
+        /** \brief Update status of connectivity */
+        bool updated;
+        /** TODO accesor/setters and management of update status */
+
+        /** \brief half-edge structure */
 
 };
 

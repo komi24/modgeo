@@ -22,7 +22,7 @@ static const uint qt_meta_data_Window[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+       5,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -33,6 +33,8 @@ static const uint qt_meta_data_Window[] = {
        8,    7,    7,    7, 0x08,
       32,   22,    7,    7, 0x08,
       51,    7,    7,    7, 0x08,
+      74,    7,    7,    7, 0x08,
+     103,    7,    7,    7, 0x08,
 
        0        // eod
 };
@@ -40,6 +42,8 @@ static const uint qt_meta_data_Window[] = {
 static const char qt_meta_stringdata_Window[] = {
     "Window\0\0quit_window()\0is_active\0"
     "set_wireframe(int)\0debug_button_clicked()\0"
+    "simple_algo_button_clicked()\0"
+    "optimized_algo_button_clicked()\0"
 };
 
 void Window::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -51,6 +55,8 @@ void Window::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 0: _t->quit_window(); break;
         case 1: _t->set_wireframe((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 2: _t->debug_button_clicked(); break;
+        case 3: _t->simple_algo_button_clicked(); break;
+        case 4: _t->optimized_algo_button_clicked(); break;
         default: ;
         }
     }
@@ -88,9 +94,9 @@ int Window::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 3)
+        if (_id < 5)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 5;
     }
     return _id;
 }

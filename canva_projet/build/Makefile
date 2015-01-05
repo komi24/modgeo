@@ -303,6 +303,30 @@ lib3d/v4.cpp.s:
 	$(MAKE) -f CMakeFiles/ensimag_synthese.dir/build.make CMakeFiles/ensimag_synthese.dir/lib3d/v4.cpp.s
 .PHONY : lib3d/v4.cpp.s
 
+libmesh/faces.o: libmesh/faces.cpp.o
+.PHONY : libmesh/faces.o
+
+# target to build an object file
+libmesh/faces.cpp.o:
+	$(MAKE) -f CMakeFiles/ensimag_synthese.dir/build.make CMakeFiles/ensimag_synthese.dir/libmesh/faces.cpp.o
+.PHONY : libmesh/faces.cpp.o
+
+libmesh/faces.i: libmesh/faces.cpp.i
+.PHONY : libmesh/faces.i
+
+# target to preprocess a source file
+libmesh/faces.cpp.i:
+	$(MAKE) -f CMakeFiles/ensimag_synthese.dir/build.make CMakeFiles/ensimag_synthese.dir/libmesh/faces.cpp.i
+.PHONY : libmesh/faces.cpp.i
+
+libmesh/faces.s: libmesh/faces.cpp.s
+.PHONY : libmesh/faces.s
+
+# target to generate assembly for a file
+libmesh/faces.cpp.s:
+	$(MAKE) -f CMakeFiles/ensimag_synthese.dir/build.make CMakeFiles/ensimag_synthese.dir/libmesh/faces.cpp.s
+.PHONY : libmesh/faces.cpp.s
+
 libmesh/mesh.o: libmesh/mesh.cpp.o
 .PHONY : libmesh/mesh.o
 
@@ -591,6 +615,30 @@ local/scene.cpp.s:
 	$(MAKE) -f CMakeFiles/ensimag_synthese.dir/build.make CMakeFiles/ensimag_synthese.dir/local/scene.cpp.s
 .PHONY : local/scene.cpp.s
 
+local/simplification.o: local/simplification.cpp.o
+.PHONY : local/simplification.o
+
+# target to build an object file
+local/simplification.cpp.o:
+	$(MAKE) -f CMakeFiles/ensimag_synthese.dir/build.make CMakeFiles/ensimag_synthese.dir/local/simplification.cpp.o
+.PHONY : local/simplification.cpp.o
+
+local/simplification.i: local/simplification.cpp.i
+.PHONY : local/simplification.i
+
+# target to preprocess a source file
+local/simplification.cpp.i:
+	$(MAKE) -f CMakeFiles/ensimag_synthese.dir/build.make CMakeFiles/ensimag_synthese.dir/local/simplification.cpp.i
+.PHONY : local/simplification.cpp.i
+
+local/simplification.s: local/simplification.cpp.s
+.PHONY : local/simplification.s
+
+# target to generate assembly for a file
+local/simplification.cpp.s:
+	$(MAKE) -f CMakeFiles/ensimag_synthese.dir/build.make CMakeFiles/ensimag_synthese.dir/local/simplification.cpp.s
+.PHONY : local/simplification.cpp.s
+
 local/window.o: local/window.cpp.o
 .PHONY : local/window.o
 
@@ -672,6 +720,9 @@ help:
 	@echo "... lib3d/v4.o"
 	@echo "... lib3d/v4.i"
 	@echo "... lib3d/v4.s"
+	@echo "... libmesh/faces.o"
+	@echo "... libmesh/faces.i"
+	@echo "... libmesh/faces.s"
 	@echo "... libmesh/mesh.o"
 	@echo "... libmesh/mesh.i"
 	@echo "... libmesh/mesh.s"
@@ -708,6 +759,9 @@ help:
 	@echo "... local/scene.o"
 	@echo "... local/scene.i"
 	@echo "... local/scene.s"
+	@echo "... local/simplification.o"
+	@echo "... local/simplification.i"
+	@echo "... local/simplification.s"
 	@echo "... local/window.o"
 	@echo "... local/window.i"
 	@echo "... local/window.s"

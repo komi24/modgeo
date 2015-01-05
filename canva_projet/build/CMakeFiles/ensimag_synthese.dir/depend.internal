@@ -43,11 +43,15 @@ CMakeFiles/ensimag_synthese.dir/lib3d/v4.cpp.o
  ../lib3d/v3.hpp
  ../lib3d/v4.hpp
  /home/work/modgeo/canva_projet/lib3d/v4.cpp
+CMakeFiles/ensimag_synthese.dir/libmesh/faces.cpp.o
+ /home/work/modgeo/canva_projet/libmesh/faces.cpp
+ /home/work/modgeo/canva_projet/libmesh/faces.hpp
 CMakeFiles/ensimag_synthese.dir/libmesh/mesh.cpp.o
  ../lib3d/exception_proj.hpp
  ../lib3d/matrix3.hpp
  ../lib3d/v2.hpp
  ../lib3d/v3.hpp
+ ../libmesh/faces.hpp
  ../libmesh/mesh.hpp
  ../libmesh/mesh_io.hpp
  /home/work/modgeo/canva_projet/libmesh/mesh.cpp
@@ -55,6 +59,7 @@ CMakeFiles/ensimag_synthese.dir/libmesh/mesh_io.cpp.o
  ../lib3d/exception_proj.hpp
  ../lib3d/v2.hpp
  ../lib3d/v3.hpp
+ ../libmesh/faces.hpp
  ../libmesh/mesh.hpp
  ../libmesh/mesh_io.hpp
  /home/work/modgeo/canva_projet/libmesh/mesh_io.cpp
@@ -62,6 +67,7 @@ CMakeFiles/ensimag_synthese.dir/libmesh/opengl_drawer.cpp.o
  ../lib3d/exception_proj.hpp
  ../lib3d/v2.hpp
  ../lib3d/v3.hpp
+ ../libmesh/faces.hpp
  ../libmesh/mesh.hpp
  ../libmesh/opengl_drawer.hpp
  /home/work/modgeo/canva_projet/libmesh/opengl_drawer.cpp
@@ -88,6 +94,7 @@ CMakeFiles/ensimag_synthese.dir/local/debug_mesh.cpp.o
  ../lib3d/v2.hpp
  ../lib3d/v3.hpp
  ../lib3d/v4.hpp
+ ../libmesh/faces.hpp
  ../libmesh/mesh.hpp
  ../libnavigation/navigator_tool.hpp
  ../libnavigation/trackball.hpp
@@ -216,6 +223,7 @@ CMakeFiles/ensimag_synthese.dir/local/glwidget.cpp.o
  ../lib3d/v2.hpp
  ../lib3d/v3.hpp
  ../lib3d/v4.hpp
+ ../libmesh/faces.hpp
  ../libmesh/mesh.hpp
  ../libnavigation/navigator_tool.hpp
  ../libnavigation/trackball.hpp
@@ -657,6 +665,7 @@ CMakeFiles/ensimag_synthese.dir/local/glwidget.cpp.o
  /usr/include/qt4/QtOpenGL/qglcolormap.h
 CMakeFiles/ensimag_synthese.dir/local/main.cpp.o
  ../lib3d/exception_proj.hpp
+ ../libmesh/faces.hpp
  ../local/window.hpp
  /home/work/modgeo/canva_projet/local/main.cpp
  /usr/include/qt4/Qt3Support/q3cstring.h
@@ -779,6 +788,7 @@ CMakeFiles/ensimag_synthese.dir/local/moc_glwidget.cxx.o
  ../lib3d/v2.hpp
  ../lib3d/v3.hpp
  ../lib3d/v4.hpp
+ ../libmesh/faces.hpp
  ../libmesh/mesh.hpp
  ../libnavigation/navigator_tool.hpp
  ../libnavigation/trackball.hpp
@@ -1013,6 +1023,7 @@ CMakeFiles/ensimag_synthese.dir/local/moc_window_mesh_debug.cxx.o
  ../lib3d/v2.hpp
  ../lib3d/v3.hpp
  ../lib3d/v4.hpp
+ ../libmesh/faces.hpp
  ../libmesh/mesh.hpp
  ../libnavigation/navigator_tool.hpp
  ../libnavigation/trackball.hpp
@@ -1148,6 +1159,7 @@ CMakeFiles/ensimag_synthese.dir/local/scene.cpp.o
  ../lib3d/v2.hpp
  ../lib3d/v3.hpp
  ../lib3d/v4.hpp
+ ../libmesh/faces.hpp
  ../libmesh/mesh.hpp
  ../libmesh/opengl_drawer.hpp
  ../libnavigation/navigator_tool.hpp
@@ -1271,6 +1283,9 @@ CMakeFiles/ensimag_synthese.dir/local/scene.cpp.o
  /usr/include/qt4/QtOpenGL/QGLWidget
  /usr/include/qt4/QtOpenGL/qgl.h
  /usr/include/qt4/QtOpenGL/qglcolormap.h
+CMakeFiles/ensimag_synthese.dir/local/simplification.cpp.o
+ /home/work/modgeo/canva_projet/local/simplification.cpp
+ /home/work/modgeo/canva_projet/local/simplification.h
 CMakeFiles/ensimag_synthese.dir/local/window.cpp.o
  ../lib3d/exception_proj.hpp
  ../lib3d/matrix3.hpp
@@ -1278,6 +1293,7 @@ CMakeFiles/ensimag_synthese.dir/local/window.cpp.o
  ../lib3d/v2.hpp
  ../lib3d/v3.hpp
  ../lib3d/v4.hpp
+ ../libmesh/faces.hpp
  ../libmesh/mesh.hpp
  ../libnavigation/navigator_tool.hpp
  ../libnavigation/trackball.hpp
@@ -1705,6 +1721,8 @@ CMakeFiles/ensimag_synthese.dir/local/window.cpp.o
  /usr/include/qt4/QtGui/QFont
  /usr/include/qt4/QtGui/QGridLayout
  /usr/include/qt4/QtGui/QHeaderView
+ /usr/include/qt4/QtGui/QLCDNumber
+ /usr/include/qt4/QtGui/QLabel
  /usr/include/qt4/QtGui/QLayout
  /usr/include/qt4/QtGui/QMainWindow
  /usr/include/qt4/QtGui/QMatrix4x4
@@ -1715,6 +1733,7 @@ CMakeFiles/ensimag_synthese.dir/local/window.cpp.o
  /usr/include/qt4/QtGui/QPlatformWindowFormat
  /usr/include/qt4/QtGui/QPrinter
  /usr/include/qt4/QtGui/QPushButton
+ /usr/include/qt4/QtGui/QSlider
  /usr/include/qt4/QtGui/QStatusBar
  /usr/include/qt4/QtGui/QTabWidget
  /usr/include/qt4/QtGui/QTransform
@@ -1831,6 +1850,7 @@ CMakeFiles/ensimag_synthese.dir/local/window_mesh_debug.cpp.o
  ../lib3d/v2.hpp
  ../lib3d/v3.hpp
  ../lib3d/v4.hpp
+ ../libmesh/faces.hpp
  ../libmesh/mesh.hpp
  ../libnavigation/navigator_tool.hpp
  ../libnavigation/trackball.hpp

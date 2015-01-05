@@ -43,10 +43,14 @@ CMakeFiles/ensimag_synthese.dir/lib3d/v4.cpp.o: ../lib3d/v3.hpp
 CMakeFiles/ensimag_synthese.dir/lib3d/v4.cpp.o: ../lib3d/v4.hpp
 CMakeFiles/ensimag_synthese.dir/lib3d/v4.cpp.o: ../lib3d/v4.cpp
 
+CMakeFiles/ensimag_synthese.dir/libmesh/faces.cpp.o: ../libmesh/faces.cpp
+CMakeFiles/ensimag_synthese.dir/libmesh/faces.cpp.o: ../libmesh/faces.hpp
+
 CMakeFiles/ensimag_synthese.dir/libmesh/mesh.cpp.o: ../lib3d/exception_proj.hpp
 CMakeFiles/ensimag_synthese.dir/libmesh/mesh.cpp.o: ../lib3d/matrix3.hpp
 CMakeFiles/ensimag_synthese.dir/libmesh/mesh.cpp.o: ../lib3d/v2.hpp
 CMakeFiles/ensimag_synthese.dir/libmesh/mesh.cpp.o: ../lib3d/v3.hpp
+CMakeFiles/ensimag_synthese.dir/libmesh/mesh.cpp.o: ../libmesh/faces.hpp
 CMakeFiles/ensimag_synthese.dir/libmesh/mesh.cpp.o: ../libmesh/mesh.hpp
 CMakeFiles/ensimag_synthese.dir/libmesh/mesh.cpp.o: ../libmesh/mesh_io.hpp
 CMakeFiles/ensimag_synthese.dir/libmesh/mesh.cpp.o: ../libmesh/mesh.cpp
@@ -54,6 +58,7 @@ CMakeFiles/ensimag_synthese.dir/libmesh/mesh.cpp.o: ../libmesh/mesh.cpp
 CMakeFiles/ensimag_synthese.dir/libmesh/mesh_io.cpp.o: ../lib3d/exception_proj.hpp
 CMakeFiles/ensimag_synthese.dir/libmesh/mesh_io.cpp.o: ../lib3d/v2.hpp
 CMakeFiles/ensimag_synthese.dir/libmesh/mesh_io.cpp.o: ../lib3d/v3.hpp
+CMakeFiles/ensimag_synthese.dir/libmesh/mesh_io.cpp.o: ../libmesh/faces.hpp
 CMakeFiles/ensimag_synthese.dir/libmesh/mesh_io.cpp.o: ../libmesh/mesh.hpp
 CMakeFiles/ensimag_synthese.dir/libmesh/mesh_io.cpp.o: ../libmesh/mesh_io.hpp
 CMakeFiles/ensimag_synthese.dir/libmesh/mesh_io.cpp.o: ../libmesh/mesh_io.cpp
@@ -61,6 +66,7 @@ CMakeFiles/ensimag_synthese.dir/libmesh/mesh_io.cpp.o: ../libmesh/mesh_io.cpp
 CMakeFiles/ensimag_synthese.dir/libmesh/opengl_drawer.cpp.o: ../lib3d/exception_proj.hpp
 CMakeFiles/ensimag_synthese.dir/libmesh/opengl_drawer.cpp.o: ../lib3d/v2.hpp
 CMakeFiles/ensimag_synthese.dir/libmesh/opengl_drawer.cpp.o: ../lib3d/v3.hpp
+CMakeFiles/ensimag_synthese.dir/libmesh/opengl_drawer.cpp.o: ../libmesh/faces.hpp
 CMakeFiles/ensimag_synthese.dir/libmesh/opengl_drawer.cpp.o: ../libmesh/mesh.hpp
 CMakeFiles/ensimag_synthese.dir/libmesh/opengl_drawer.cpp.o: ../libmesh/opengl_drawer.hpp
 CMakeFiles/ensimag_synthese.dir/libmesh/opengl_drawer.cpp.o: ../libmesh/opengl_drawer.cpp
@@ -87,6 +93,7 @@ CMakeFiles/ensimag_synthese.dir/local/debug_mesh.cpp.o: ../lib3d/quaternion.hpp
 CMakeFiles/ensimag_synthese.dir/local/debug_mesh.cpp.o: ../lib3d/v2.hpp
 CMakeFiles/ensimag_synthese.dir/local/debug_mesh.cpp.o: ../lib3d/v3.hpp
 CMakeFiles/ensimag_synthese.dir/local/debug_mesh.cpp.o: ../lib3d/v4.hpp
+CMakeFiles/ensimag_synthese.dir/local/debug_mesh.cpp.o: ../libmesh/faces.hpp
 CMakeFiles/ensimag_synthese.dir/local/debug_mesh.cpp.o: ../libmesh/mesh.hpp
 CMakeFiles/ensimag_synthese.dir/local/debug_mesh.cpp.o: ../libnavigation/navigator_tool.hpp
 CMakeFiles/ensimag_synthese.dir/local/debug_mesh.cpp.o: ../libnavigation/trackball.hpp
@@ -215,6 +222,7 @@ CMakeFiles/ensimag_synthese.dir/local/glwidget.cpp.o: ../lib3d/quaternion.hpp
 CMakeFiles/ensimag_synthese.dir/local/glwidget.cpp.o: ../lib3d/v2.hpp
 CMakeFiles/ensimag_synthese.dir/local/glwidget.cpp.o: ../lib3d/v3.hpp
 CMakeFiles/ensimag_synthese.dir/local/glwidget.cpp.o: ../lib3d/v4.hpp
+CMakeFiles/ensimag_synthese.dir/local/glwidget.cpp.o: ../libmesh/faces.hpp
 CMakeFiles/ensimag_synthese.dir/local/glwidget.cpp.o: ../libmesh/mesh.hpp
 CMakeFiles/ensimag_synthese.dir/local/glwidget.cpp.o: ../libnavigation/navigator_tool.hpp
 CMakeFiles/ensimag_synthese.dir/local/glwidget.cpp.o: ../libnavigation/trackball.hpp
@@ -656,6 +664,7 @@ CMakeFiles/ensimag_synthese.dir/local/glwidget.cpp.o: /usr/include/qt4/QtOpenGL/
 CMakeFiles/ensimag_synthese.dir/local/glwidget.cpp.o: /usr/include/qt4/QtOpenGL/qglcolormap.h
 
 CMakeFiles/ensimag_synthese.dir/local/main.cpp.o: ../lib3d/exception_proj.hpp
+CMakeFiles/ensimag_synthese.dir/local/main.cpp.o: ../libmesh/faces.hpp
 CMakeFiles/ensimag_synthese.dir/local/main.cpp.o: ../local/window.hpp
 CMakeFiles/ensimag_synthese.dir/local/main.cpp.o: ../local/main.cpp
 CMakeFiles/ensimag_synthese.dir/local/main.cpp.o: /usr/include/qt4/Qt3Support/q3cstring.h
@@ -778,6 +787,7 @@ CMakeFiles/ensimag_synthese.dir/local/moc_glwidget.cxx.o: ../lib3d/quaternion.hp
 CMakeFiles/ensimag_synthese.dir/local/moc_glwidget.cxx.o: ../lib3d/v2.hpp
 CMakeFiles/ensimag_synthese.dir/local/moc_glwidget.cxx.o: ../lib3d/v3.hpp
 CMakeFiles/ensimag_synthese.dir/local/moc_glwidget.cxx.o: ../lib3d/v4.hpp
+CMakeFiles/ensimag_synthese.dir/local/moc_glwidget.cxx.o: ../libmesh/faces.hpp
 CMakeFiles/ensimag_synthese.dir/local/moc_glwidget.cxx.o: ../libmesh/mesh.hpp
 CMakeFiles/ensimag_synthese.dir/local/moc_glwidget.cxx.o: ../libnavigation/navigator_tool.hpp
 CMakeFiles/ensimag_synthese.dir/local/moc_glwidget.cxx.o: ../libnavigation/trackball.hpp
@@ -1012,6 +1022,7 @@ CMakeFiles/ensimag_synthese.dir/local/moc_window_mesh_debug.cxx.o: ../lib3d/quat
 CMakeFiles/ensimag_synthese.dir/local/moc_window_mesh_debug.cxx.o: ../lib3d/v2.hpp
 CMakeFiles/ensimag_synthese.dir/local/moc_window_mesh_debug.cxx.o: ../lib3d/v3.hpp
 CMakeFiles/ensimag_synthese.dir/local/moc_window_mesh_debug.cxx.o: ../lib3d/v4.hpp
+CMakeFiles/ensimag_synthese.dir/local/moc_window_mesh_debug.cxx.o: ../libmesh/faces.hpp
 CMakeFiles/ensimag_synthese.dir/local/moc_window_mesh_debug.cxx.o: ../libmesh/mesh.hpp
 CMakeFiles/ensimag_synthese.dir/local/moc_window_mesh_debug.cxx.o: ../libnavigation/navigator_tool.hpp
 CMakeFiles/ensimag_synthese.dir/local/moc_window_mesh_debug.cxx.o: ../libnavigation/trackball.hpp
@@ -1147,6 +1158,7 @@ CMakeFiles/ensimag_synthese.dir/local/scene.cpp.o: ../lib3d/quaternion.hpp
 CMakeFiles/ensimag_synthese.dir/local/scene.cpp.o: ../lib3d/v2.hpp
 CMakeFiles/ensimag_synthese.dir/local/scene.cpp.o: ../lib3d/v3.hpp
 CMakeFiles/ensimag_synthese.dir/local/scene.cpp.o: ../lib3d/v4.hpp
+CMakeFiles/ensimag_synthese.dir/local/scene.cpp.o: ../libmesh/faces.hpp
 CMakeFiles/ensimag_synthese.dir/local/scene.cpp.o: ../libmesh/mesh.hpp
 CMakeFiles/ensimag_synthese.dir/local/scene.cpp.o: ../libmesh/opengl_drawer.hpp
 CMakeFiles/ensimag_synthese.dir/local/scene.cpp.o: ../libnavigation/navigator_tool.hpp
@@ -1271,12 +1283,16 @@ CMakeFiles/ensimag_synthese.dir/local/scene.cpp.o: /usr/include/qt4/QtOpenGL/QGL
 CMakeFiles/ensimag_synthese.dir/local/scene.cpp.o: /usr/include/qt4/QtOpenGL/qgl.h
 CMakeFiles/ensimag_synthese.dir/local/scene.cpp.o: /usr/include/qt4/QtOpenGL/qglcolormap.h
 
+CMakeFiles/ensimag_synthese.dir/local/simplification.cpp.o: ../local/simplification.cpp
+CMakeFiles/ensimag_synthese.dir/local/simplification.cpp.o: ../local/simplification.h
+
 CMakeFiles/ensimag_synthese.dir/local/window.cpp.o: ../lib3d/exception_proj.hpp
 CMakeFiles/ensimag_synthese.dir/local/window.cpp.o: ../lib3d/matrix3.hpp
 CMakeFiles/ensimag_synthese.dir/local/window.cpp.o: ../lib3d/quaternion.hpp
 CMakeFiles/ensimag_synthese.dir/local/window.cpp.o: ../lib3d/v2.hpp
 CMakeFiles/ensimag_synthese.dir/local/window.cpp.o: ../lib3d/v3.hpp
 CMakeFiles/ensimag_synthese.dir/local/window.cpp.o: ../lib3d/v4.hpp
+CMakeFiles/ensimag_synthese.dir/local/window.cpp.o: ../libmesh/faces.hpp
 CMakeFiles/ensimag_synthese.dir/local/window.cpp.o: ../libmesh/mesh.hpp
 CMakeFiles/ensimag_synthese.dir/local/window.cpp.o: ../libnavigation/navigator_tool.hpp
 CMakeFiles/ensimag_synthese.dir/local/window.cpp.o: ../libnavigation/trackball.hpp
@@ -1704,6 +1720,8 @@ CMakeFiles/ensimag_synthese.dir/local/window.cpp.o: /usr/include/qt4/QtGui/QFile
 CMakeFiles/ensimag_synthese.dir/local/window.cpp.o: /usr/include/qt4/QtGui/QFont
 CMakeFiles/ensimag_synthese.dir/local/window.cpp.o: /usr/include/qt4/QtGui/QGridLayout
 CMakeFiles/ensimag_synthese.dir/local/window.cpp.o: /usr/include/qt4/QtGui/QHeaderView
+CMakeFiles/ensimag_synthese.dir/local/window.cpp.o: /usr/include/qt4/QtGui/QLCDNumber
+CMakeFiles/ensimag_synthese.dir/local/window.cpp.o: /usr/include/qt4/QtGui/QLabel
 CMakeFiles/ensimag_synthese.dir/local/window.cpp.o: /usr/include/qt4/QtGui/QLayout
 CMakeFiles/ensimag_synthese.dir/local/window.cpp.o: /usr/include/qt4/QtGui/QMainWindow
 CMakeFiles/ensimag_synthese.dir/local/window.cpp.o: /usr/include/qt4/QtGui/QMatrix4x4
@@ -1714,6 +1732,7 @@ CMakeFiles/ensimag_synthese.dir/local/window.cpp.o: /usr/include/qt4/QtGui/QPlat
 CMakeFiles/ensimag_synthese.dir/local/window.cpp.o: /usr/include/qt4/QtGui/QPlatformWindowFormat
 CMakeFiles/ensimag_synthese.dir/local/window.cpp.o: /usr/include/qt4/QtGui/QPrinter
 CMakeFiles/ensimag_synthese.dir/local/window.cpp.o: /usr/include/qt4/QtGui/QPushButton
+CMakeFiles/ensimag_synthese.dir/local/window.cpp.o: /usr/include/qt4/QtGui/QSlider
 CMakeFiles/ensimag_synthese.dir/local/window.cpp.o: /usr/include/qt4/QtGui/QStatusBar
 CMakeFiles/ensimag_synthese.dir/local/window.cpp.o: /usr/include/qt4/QtGui/QTabWidget
 CMakeFiles/ensimag_synthese.dir/local/window.cpp.o: /usr/include/qt4/QtGui/QTransform
@@ -1830,6 +1849,7 @@ CMakeFiles/ensimag_synthese.dir/local/window_mesh_debug.cpp.o: ../lib3d/quaterni
 CMakeFiles/ensimag_synthese.dir/local/window_mesh_debug.cpp.o: ../lib3d/v2.hpp
 CMakeFiles/ensimag_synthese.dir/local/window_mesh_debug.cpp.o: ../lib3d/v3.hpp
 CMakeFiles/ensimag_synthese.dir/local/window_mesh_debug.cpp.o: ../lib3d/v4.hpp
+CMakeFiles/ensimag_synthese.dir/local/window_mesh_debug.cpp.o: ../libmesh/faces.hpp
 CMakeFiles/ensimag_synthese.dir/local/window_mesh_debug.cpp.o: ../libmesh/mesh.hpp
 CMakeFiles/ensimag_synthese.dir/local/window_mesh_debug.cpp.o: ../libnavigation/navigator_tool.hpp
 CMakeFiles/ensimag_synthese.dir/local/window_mesh_debug.cpp.o: ../libnavigation/trackball.hpp
