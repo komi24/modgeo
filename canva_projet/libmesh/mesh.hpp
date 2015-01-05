@@ -22,6 +22,7 @@
 #include <v2.hpp>
 #include <vector>
 #include <string>
+#include <half_edge.hpp>
 
 
 
