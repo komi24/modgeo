@@ -1,6 +1,0 @@
-# Hashes of file build rules.
-9830a532add2911f4360919bf24c316a local/moc_glwidget.cxx
-e36bcc4135d148ec9e9d389902ffdac0 local/moc_window.cxx
-319095d65c8669ba71663c3af13c65a9 local/moc_window_mesh_debug.cxx
-2912d75ca10f112a8059f585c65cf0fa ui_mainwindow.h
-069c795605dd5065bda7ec7cb716445d ui_mesh_debug.h
