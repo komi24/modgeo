@@ -28,7 +28,7 @@ void scene::load_model()
     // Generate mesh                           //
     //*****************************************//
 
-    int Nx = 32, Ny = 32;
+    int Nx = 320, Ny = 32;
     double x,y;
     for(int i = 0; i<Nx; ++i)
     {

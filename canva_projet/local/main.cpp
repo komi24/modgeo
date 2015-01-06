@@ -8,10 +8,11 @@ int main(int argc,char *argv[])
 {
     try
     {
-        std::cout<<"saluut "<<std::endl;
         QApplication app(argc,argv);
         Window window;
         window.show();
+
+        std::cout<<"saluut uh ha!"<<std::endl;
 
         return app.exec();
     }
