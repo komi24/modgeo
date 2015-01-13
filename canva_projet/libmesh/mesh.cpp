@@ -27,6 +27,7 @@
 #include <map>
 #include <list>
 #include <assert.h>
+#include <cstdlib>
 
 namespace proj
 {
@@ -55,6 +56,39 @@ namespace proj
             proj::exception_proj(msg.str(),__FILE__,__FUNCTION__,__LINE__);
         }
     }
+
+    // Complexity: O(numVertices)
+    std::vector<v3> updateVertices(std::vector<v3> vertices, int n)
+    {
+        std::vector<v3> result;
+        for (std::size_t i=0;i<vertices.size();++i) {
+            if(i != n) result.push_back(vertices[i]);
+        }
+        return result;
+    }
+
+    mesh& mesh::simplification()
+    {
+        /** EL MANEJO DE LA TABLA VERTICES FUNCIONA BIEN */
+        std::vector<v3> vertices = v_vertices;
+        std::vector<int> connectivity = v_connectivity;
+
+        int vertexToDelete = -1;
+        int numOriginalVertices = vertices.size();
+
+        for(std::size_t i=0;i<numOriginalVertices;++i)
+        {
+            vertexToDelete = rand() % vertices.size();
+            vertices = updateVertices(vertices, vertexToDelete);
+            //connectivity = updateConnectivity(connectivity, vertexToDelete);
+        }
+
+    }
+
+
+
+
+
 
     void mesh::compute_normal()
     {

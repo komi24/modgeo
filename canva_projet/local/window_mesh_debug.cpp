@@ -40,7 +40,6 @@ window_mesh_debug::~window_mesh_debug()
 
 void window_mesh_debug::accept()
 {
-
     done(0);
 }
 

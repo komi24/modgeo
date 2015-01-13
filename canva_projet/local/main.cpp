@@ -12,8 +12,6 @@ int main(int argc,char *argv[])
         Window window;
         window.show();
 
-        std::cout<<"saluut uh ha!"<<std::endl;
-
         return app.exec();
     }
     catch(proj::exception_proj e)
