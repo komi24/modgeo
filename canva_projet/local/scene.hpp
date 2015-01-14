@@ -22,6 +22,9 @@ public:
 
     scene();
 
+    /** \brief  simplification */
+    void simplification();
+
     /** \brief Method called only once at the beginning (load off files ...) */
     void load_model();
     /** \brief Method called at every frame */

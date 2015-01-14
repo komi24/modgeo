@@ -57,19 +57,76 @@ namespace proj
         }
     }
 
-    // Complexity: O(numVertices)
-    std::vector<v3> updateVertices(std::vector<v3> vertices, int n)
+    /**
+     * Removes the element n from the vector vertices
+     */
+    std::vector<v3> updateVertices(std::vector<v3> vertices, v3 n)
     {
         std::vector<v3> result;
+        v3 vertex;
         for (std::size_t i=0;i<vertices.size();++i) {
-            if(i != n) result.push_back(vertices[i]);
+            vertex = vertices[i];
+            if( !(vertex.x() == n.x() && vertex.y() == n.y() && vertex.z() == n.z()) )
+                // Vertices are not equal, so we do not remove it
+                result.push_back(vertices[i]);
         }
         return result;
     }
 
+    /**
+     * Updates the connectivy vector removing the edge [MN]
+     */
+    std::vector<int> updateConnectivity(std::vector<int> v, int m, int n)
+    {
+
+        std::vector<int> w;
+        int a, b, c;
+        bool am, an, bm, bn, cm, cn;
+
+        for (std::size_t i=0;i<v.size();i=i+3) {
+            a = v[i];
+            b = v[i+1]; // 3 vertices from the face
+            c = v[i+2];
+
+            if (a==m) am = true; else am=false;
+            if (a==n) an = true; else an=false;
+            if (b==m) bm = true; else bm=false;
+            if (b==n) bn = true; else bn=false;
+            if (c==m) cm = true; else cm=false;
+            if (c==n) cn = true; else cn=false;
+
+            if(!am && !an && !bm && !bn && !cm && !cn) {
+                // No vertex is changing, we do not modify this face
+                w.push_back(a);
+                w.push_back(b);
+                w.push_back(c);
+            } else if ((am || bm || cm) && (an || bn || cn)) {
+                // The two vertices are in the triangle, we do not include the face in the new mesh
+            } else {
+                // One vertex will change
+                if(am || an){
+                    w.push_back(m);
+                    w.push_back(b);
+                    w.push_back(c);
+                } else if(bm || bn){
+                    w.push_back(a);
+                    w.push_back(m);
+                    w.push_back(c);
+                } else {
+                    w.push_back(a);
+                    w.push_back(b);
+                    w.push_back(m);
+                }
+            }
+
+        }
+
+        return w;
+    }
+
     mesh& mesh::simplification()
     {
-        /** EL MANEJO DE LA TABLA VERTICES FUNCIONA BIEN */
+/*
         std::vector<v3> vertices = v_vertices;
         std::vector<int> connectivity = v_connectivity;
 
@@ -80,8 +137,51 @@ namespace proj
         {
             vertexToDelete = rand() % vertices.size();
             vertices = updateVertices(vertices, vertexToDelete);
-            //connectivity = updateConnectivity(connectivity, vertexToDelete);
+            connectivity = updateConnectivity(connectivity, vertexToDelete);
         }
+*/
+
+        char buffer[80];
+
+        std::vector<v3> vertices;
+        vertices.push_back(v3(1,1,1));
+        vertices.push_back(v3(2,2,2));
+        vertices.push_back(v3(3,3,3));
+        vertices.push_back(v3(4,4,4));
+        vertices.push_back(v3(5,5,5));
+        vertices.push_back(v3(6,6,6));
+        vertices.push_back(v3(7,7,7));
+        vertices.push_back(v3(8,8,8));
+
+        std::vector<int> connectivity;
+        connectivity.push_back(1);connectivity.push_back(2);connectivity.push_back(7); // Face 1
+        connectivity.push_back(2);connectivity.push_back(7);connectivity.push_back(3); // Face 2
+        connectivity.push_back(3);connectivity.push_back(7);connectivity.push_back(8); // Face 3
+        connectivity.push_back(3);connectivity.push_back(4);connectivity.push_back(8); // Face 4
+        connectivity.push_back(4);connectivity.push_back(5);connectivity.push_back(8); // Face 5
+        connectivity.push_back(5);connectivity.push_back(8);connectivity.push_back(6); // Face 6
+        connectivity.push_back(6);connectivity.push_back(7);connectivity.push_back(8); // Face 7
+        connectivity.push_back(1);connectivity.push_back(7);connectivity.push_back(6); // Face 8
+
+        // We remove the vertex in (3,3,3) and the edge [2-3]
+        vertices = updateVertices(vertices, v3(3,3,3));
+        connectivity = updateConnectivity(connectivity, 2, 3);
+
+        for(int i = 0; i < vertices.size(); i++) {
+            sprintf(buffer, "%10.2f", vertices[i].x());
+            std::cout << buffer << std::endl;
+        }
+
+        std::cout << "" << std::endl;
+        std::cout << "-------------------------------" << std::endl;
+        std::cout << "" << std::endl;
+
+        for(int i = 0; i < connectivity.size(); i++) {
+            if(i%3==0)std::cout << "" << std::endl;
+            sprintf(buffer, "%d", connectivity[i]);
+            std::cout << buffer << std::endl;
+        }
+
 
     }
 
