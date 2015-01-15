@@ -198,14 +198,25 @@ class mesh
         /** \brief load a off file */
         void load_file(const std::string &filename);
 
+
+        // ********************************************* //
+        // ********************************************* //
+        //  Selection
+        // ********************************************* //
+        // ********************************************* //
+        void selection(int &vertexToDelete1, int &vertexToDelete2);
+
         // ********************************************* //
         // ********************************************* //
         //  Simplification
         // ********************************************* //
         // ********************************************* //
 
+        /** \brief Updates the vectors by removing the vertex M and the edge [MN] */
+        std::vector<int> updateTables(std::vector<int> v, int m, int n);
+
         /** \brief create a simplified mesh */
-        mesh& simplification(); //TODO
+        void simplification(); //TODO
 
     private:
 
