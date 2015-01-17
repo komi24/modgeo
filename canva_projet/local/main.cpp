@@ -3,6 +3,7 @@
 #include <window.hpp>
 
 #include <exception_proj.hpp>
+#include <testhe.hpp>
 
 int main(int argc,char *argv[])
 {
@@ -12,6 +13,8 @@ int main(int argc,char *argv[])
         Window window;
         window.show();
 
+        TestHE *t = new TestHE();
+        t->runTest();
         std::cout<<"saluut uh ha!"<<std::endl;
 
         return app.exec();

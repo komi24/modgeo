@@ -23,6 +23,7 @@
 #include <vector>
 #include <string>
 #include <half_edge.hpp>
+#include <queue>
 
 
 
@@ -228,7 +229,9 @@ class mesh
 
         /** \brief internal connectivity storage */
         std::vector<int> v_connectivity;
-        /** TODO triangle strip */
+        /** TODO triangle strip
+        * this structure gives directly an ID to triangles */
+
         /** Is it more efficient to change the id number of vertices
          * or to change the structure
          * CHOSEN : structure change */
@@ -239,6 +242,10 @@ class mesh
 
         /** \brief half-edge structure */
         std::vector<half_edge> h_edges;
+
+        /** \brief Heap of pairs to give a simplify order */
+        std::priority_queue<half_edge,std::vector<half_edge>,CompareHE> pq;
+
 
 };
 
