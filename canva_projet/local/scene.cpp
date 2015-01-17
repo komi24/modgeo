@@ -119,6 +119,9 @@ void scene::manage_time(unsigned int temps)
 
 }
 
+void scene::simplification(){
+    this->mesh_1.simplification();
+}
 
 
 

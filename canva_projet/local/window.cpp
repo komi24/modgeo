@@ -8,6 +8,7 @@
 #include <ui_mainwindow.h>
 
 #include <iostream>
+#include <mesh.hpp>
 
 #include <assert.h>
 
@@ -80,7 +81,7 @@ void Window::debug_button_clicked()
 }
 void Window::simple_algo_button_clicked()
 {
-    window_debug->show();
+    this->glWidget->current_scene.simplification();
 }
 void Window::optimized_algo_button_clicked()
 {

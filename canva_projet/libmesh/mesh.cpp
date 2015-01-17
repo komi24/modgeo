@@ -27,34 +27,154 @@
 #include <map>
 #include <list>
 #include <assert.h>
+#include <cstdlib>
+
+using namespace std;
 
 namespace proj
 {
 
-    const std::vector<v3>& mesh::get_vertices() const{return v_vertices;}
-    const std::vector<v3>& mesh::get_normal() const{return v_normal;}
-    const std::vector<v3>& mesh::get_color() const{return v_color;}
+    const vector<v3>& mesh::get_vertices() const{return v_vertices;}
+    const vector<v3>& mesh::get_normal() const{return v_normal;}
+    const vector<v3>& mesh::get_color() const{return v_color;}
     /** TODO  update the connectivity with half edge structure if needed */
-    const std::vector<int>& mesh::get_connectivity() const{return v_connectivity;}
+    const vector<int>& mesh::get_connectivity() const{return v_connectivity;}
 
-    std::vector<v3>& mesh::get_vertices() {return v_vertices;}
-    std::vector<v3>& mesh::get_normal() {return v_normal;}
-    std::vector<v3>& mesh::get_color() {return v_color;}
-    std::vector<int>& mesh::get_connectivity() {return v_connectivity;}
+    vector<v3>& mesh::get_vertices() {return v_vertices;}
+    vector<v3>& mesh::get_normal() {return v_normal;}
+    vector<v3>& mesh::get_color() {return v_color;}
+    vector<int>& mesh::get_connectivity() {return v_connectivity;}
 
-    void mesh::load_file(const std::string &filename)
+    void mesh::load_file(const string &filename)
     {
-        if(filename.find(".off")!=std::string::npos)
+        if(filename.find(".off")!=string::npos)
             *this=mesh_io::load_off_file(filename);
-        else if(filename.find(".obj")!=std::string::npos)
+        else if(filename.find(".obj")!=string::npos)
             *this=mesh_io::load_obj_file(filename);
         else
         {
-            std::stringstream msg;
+            stringstream msg;
             msg<<"Error, file format unknown ["<<filename<<"]";
             proj::exception_proj(msg.str(),__FILE__,__FUNCTION__,__LINE__);
         }
     }
+
+
+    // ********************************************* //
+    // ********************************************* //
+    //  Selection
+    // ********************************************* //
+    // ********************************************* //
+
+    /**
+     *  Selection criteria algorithm for edge collapse
+     */
+    void mesh::selection(int &vertexToDelete1, int &vertexToDelete2){
+        vertexToDelete1 = rand() % v_vertices.size() - 1;
+        vertexToDelete2 = vertexToDelete1+1;
+    }
+
+
+    // ********************************************* //
+    // ********************************************* //
+    //  Simplification
+    // ********************************************* //
+    // ********************************************* //
+
+    /**
+     * Updates the vectors by removing the vertex M and the edge [MN]
+     */
+    vector<int> mesh::updateTables(vector<int> v, int m, int n)
+    {
+        v_vertices.erase(v_vertices.begin() + m);
+        v_normal.erase(v_normal.begin() + m);
+
+        int a, b, c;
+        bool am, an, bm, bn, cm, cn;
+
+        size_t vSize = v.size();
+        int indexToDelete1 = -1;
+        int indexToDelete2 = -1;
+
+        for (size_t i=0;i<vSize;i=i+3) {
+            a = v[i];
+            b = v[i+1]; // 3 vertices from the face
+            c = v[i+2];
+
+            if (a==m) am = true; else am=false;
+            if (a==n) an = true; else an=false;
+            if (b==m) bm = true; else bm=false;
+            if (b==n) bn = true; else bn=false;
+            if (c==m) cm = true; else cm=false;
+            if (c==n) cn = true; else cn=false;
+
+            if(!am && !an && !bm && !bn && !cm && !cn) {
+                // No vertex is changing, we do not modify this face
+            } else if ((am || bm || cm) && (an || bn || cn)) {
+                // The two vertices are in the triangle, we keep their indices to erase them
+                if(indexToDelete1 == -1)
+                    indexToDelete1 = i;
+                else if(indexToDelete2 == -1)
+                    indexToDelete2 = i;
+                else
+                    cout << "Error in connectivity table!!!" << endl;
+            } else {
+                // Only one vertex will change, we will take care of it after
+            }
+        }
+
+        // We erase the faces
+        if(indexToDelete1 != -1) {
+            v.erase(v.begin()+indexToDelete1,v.begin()+indexToDelete1+3);
+
+            if(indexToDelete2 != -1)
+                v.erase(v.begin()+indexToDelete2-3,v.begin()+indexToDelete2);
+
+            // We update connectivity, to keep correspondance with the vertices vector
+            for (size_t j = 0; j < v.size(); ++j) {
+                if(v[j] > min(m,n))
+                    v[j] = v[j] - 1;
+            }
+        }
+
+        return v;
+    }
+
+    void mesh::simplification() {
+        int vertexToDelete1, vertexToDelete2;
+
+        cout << "Size of vertices: " << v_vertices.size() << endl;
+        cout << "Size of normals: " << v_normal.size() << endl;
+        cout << "Size of connectivity: " << v_connectivity.size() << endl;
+        cout << "\n";
+
+        /**
+         *  Pour voir les differents changements produits dans le maillage du dinosaure,
+         *  changer la façon d obtenir les variables [vertexToDelete]. On peut clicker
+         *  sur le bouton "Algo Simple" plusieurs fois, ainsi que changer la limite du
+         *  boucle "for" ci-dessous.
+         *  Les resultats sont etranges mais c est normal a cause de la pauvre selection
+         *  des vertices.
+         */
+        selection(vertexToDelete1, vertexToDelete2);
+        for(size_t i=0;i<50;++i) {
+            v_connectivity = updateTables(v_connectivity, vertexToDelete1, vertexToDelete2);
+        }
+
+        cout << "Size of vertices: " << v_vertices.size() << endl;
+        cout << "Size of normals: " << v_normal.size() << endl;
+        cout << "Size of connectivity: " << v_connectivity.size() << endl;
+        cout << "\n";
+    }
+
+
+
+
+    // ********************************************* //
+    // ********************************************* //
+    //  Normal
+    // ********************************************* //
+    // ********************************************* //
 
     void mesh::compute_normal()
     {
@@ -107,7 +227,7 @@ namespace proj
         }
 
         v3 u=xmax-xmin;
-        double s=std::max(u.x(),u.y());
+        double s=max(u.x(),u.y());
 
         //scale positions to fit in screen
         *this -= xmin;
@@ -159,7 +279,7 @@ namespace proj
          for(unsigned int k=0,N=v_normal.size();k<N;++k)
          {
              v3 n=v_normal[k];
-             v_color[k]=v3(std::fabs(n.x()),std::fabs(n.y()),std::fabs(n.z()));
+             v_color[k]=v3(fabs(n.x()),fabs(n.y()),fabs(n.z()));
          }
     }
 
@@ -168,7 +288,7 @@ namespace proj
         //check index
         if(index>=v_vertices.size())
         {
-            std::ostringstream msg;
+            ostringstream msg;
             msg<<"Error index "<<index<<" outside bounds of size:"<<v_vertices.size();
             throw proj::exception_mesh(msg.str(),__FILE__,__PRETTY_FUNCTION__,__LINE__);
         }
@@ -180,7 +300,7 @@ namespace proj
         //check index
         if(index>=v_vertices.size())
         {
-            std::ostringstream msg;
+            ostringstream msg;
             msg<<"Error index "<<index<<" outside bounds of size:"<<v_vertices.size();
             throw proj::exception_mesh(msg.str(),__FILE__,__PRETTY_FUNCTION__,__LINE__);
         }
@@ -193,7 +313,7 @@ namespace proj
         //check index
         if(index>=v_normal.size())
         {
-            std::ostringstream msg;
+            ostringstream msg;
             msg<<"Error index "<<index<<" outside bounds of size:"<<v_normal.size();
             throw proj::exception_mesh(msg.str(),__FILE__,__PRETTY_FUNCTION__,__LINE__);
         }
@@ -205,7 +325,7 @@ namespace proj
         //check index
         if(index>=v_normal.size())
         {
-            std::ostringstream msg;
+            ostringstream msg;
             msg<<"Error index "<<index<<" outside bounds of size:"<<v_normal.size();
             throw proj::exception_mesh(msg.str(),__FILE__,__PRETTY_FUNCTION__,__LINE__);
         }
@@ -218,7 +338,7 @@ namespace proj
         //check index
         if(index>=v_color.size())
         {
-            std::ostringstream msg;
+            ostringstream msg;
             msg<<"Error index "<<index<<" outside bounds of size:"<<v_color.size();
             throw proj::exception_mesh(msg.str(),__FILE__,__PRETTY_FUNCTION__,__LINE__);
         }
@@ -230,7 +350,7 @@ namespace proj
         //check index
         if(index>=v_color.size())
         {
-            std::ostringstream msg;
+            ostringstream msg;
             msg<<"Error index "<<index<<" outside bounds of size:"<<v_color.size();
             throw proj::exception_mesh(msg.str(),__FILE__,__PRETTY_FUNCTION__,__LINE__);
         }
@@ -243,7 +363,7 @@ namespace proj
         //check index
         if(index>=v_texture.size())
         {
-            std::ostringstream msg;
+            ostringstream msg;
             msg<<"Error index "<<index<<" outside bounds of size:"<<v_texture.size();
             throw proj::exception_mesh(msg.str(),__FILE__,__PRETTY_FUNCTION__,__LINE__);
         }
@@ -255,7 +375,7 @@ namespace proj
         //check index
         if(index>=v_texture.size())
         {
-            std::ostringstream msg;
+            ostringstream msg;
             msg<<"Error index "<<index<<" outside bounds of size:"<<v_texture.size();
             throw proj::exception_mesh(msg.str(),__FILE__,__PRETTY_FUNCTION__,__LINE__);
         }
@@ -272,7 +392,7 @@ namespace proj
         //check index
         if(index>=v_connectivity.size())
         {
-            std::ostringstream msg;
+            ostringstream msg;
             msg<<"Error index "<<index<<" outside bounds of size:"<<v_color.size();
             throw proj::exception_mesh(msg.str(),__FILE__,__PRETTY_FUNCTION__,__LINE__);
         }
@@ -288,7 +408,7 @@ namespace proj
         //check index
         if(index>=v_connectivity.size())
         {
-            std::ostringstream msg;
+            ostringstream msg;
             msg<<"Error index "<<index<<" outside bounds of size:"<<v_color.size();
             throw proj::exception_mesh(msg.str(),__FILE__,__PRETTY_FUNCTION__,__LINE__);
         }
@@ -324,32 +444,32 @@ namespace proj
         v_connectivity.push_back(u2);
     }
 
-    const std::vector<v2>& mesh::get_texture() const
+    const vector<v2>& mesh::get_texture() const
     {
         return v_texture;
     }
-    std::vector<v2>& mesh::get_texture()
+    vector<v2>& mesh::get_texture()
     {
         return v_texture;
     }
 
-    std::vector<v3> mesh::get_normal_per_vertex() const
+    vector<v3> mesh::get_normal_per_vertex() const
     {
-        const std::vector<int>& c=v_connectivity;
-        const std::vector<v3> normal_polygon=get_normal_per_polygon();
+        const vector<int>& c=v_connectivity;
+        const vector<v3> normal_polygon=get_normal_per_polygon();
 
         //compute star
-        std::map<int,std::list<int> > star;
+        map<int,list<int> > star;
         for(unsigned int k=0,N=c.size()/3;k<N;++k)
             for(unsigned int k_dim=0;k_dim<3;++k_dim)
                 star[c[3*k+k_dim]].push_back(k);
 
         //compute per vertex normal
-        std::vector<v3> normal_vertex;
+        vector<v3> normal_vertex;
         for(unsigned int k=0,N=v_vertices.size();k<N;++k)
         {
             v3 temp_normal;
-            for(std::list<int>::const_iterator it=star[k].begin(),it_end=star[k].end();it!=it_end;++it)
+            for(list<int>::const_iterator it=star[k].begin(),it_end=star[k].end();it!=it_end;++it)
                 temp_normal += normal_polygon[*it];
 
             try
@@ -358,7 +478,7 @@ namespace proj
             }
             catch(proj::exception_proj e)
             {
-                std::cout<<"Warning star degenerated"<<std::endl;
+                cout<<"Warning star degenerated"<<endl;
                 normal_vertex.push_back(v3(0,0,1));
             }
         }
@@ -366,13 +486,13 @@ namespace proj
         return normal_vertex;
 
     }
-    std::vector<v3> mesh::get_normal_per_polygon() const
+    vector<v3> mesh::get_normal_per_polygon() const
     {
-        const std::vector<v3>& v=v_vertices;
-        const std::vector<int>& c=v_connectivity;
+        const vector<v3>& v=v_vertices;
+        const vector<int>& c=v_connectivity;
 
         //compute normal polygon
-        std::vector<v3> normal_polygon;
+        vector<v3> normal_polygon;
         for(unsigned int k=0,N=c.size()/3;k<N;++k)
         {
             v3 x0=v[c[3*k+0]];v3 x1=v[c[3*k+1]];v3 x2=v[c[3*k+2]];
@@ -383,7 +503,7 @@ namespace proj
             }
             catch(proj::exception_proj e)
             {
-                std::cout<<"Warning degenerated polygon ["<<k<<"]"<<std::endl;
+                cout<<"Warning degenerated polygon ["<<k<<"]"<<endl;
                 normal_polygon.push_back(v3(0,0,1));
             }
         }
@@ -400,7 +520,7 @@ namespace proj
         //check index
         if(index>=v_connectivity.size())
         {
-            std::ostringstream msg;
+            ostringstream msg;
             msg<<"Error index "<<index<<" outside bounds of size:"<<v_connectivity.size();
             throw proj::exception_mesh(msg.str(),__FILE__,__PRETTY_FUNCTION__,__LINE__);
         }
@@ -421,7 +541,7 @@ namespace proj
         //check index
         if(index>=v_connectivity.size())
         {
-            std::ostringstream msg;
+            ostringstream msg;
             msg<<"Error index "<<index<<" outside bounds of size:"<<v_connectivity.size();
             throw proj::exception_mesh(msg.str(),__FILE__,__PRETTY_FUNCTION__,__LINE__);
         }
