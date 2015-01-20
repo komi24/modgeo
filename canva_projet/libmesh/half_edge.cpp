@@ -25,6 +25,15 @@ void half_edge::setCcw(half_edge* h){
     this->ccw=h;
 }
 
+void half_edge::setCw(half_edge* h){
+    this->cw=h;
+}
+
+void half_edge::setOpposite(half_edge* h){
+    this->opposite=h;
+}
+
+
 // ********************************************* //
 // ********************************************* //
 //  Accessor
@@ -97,6 +106,11 @@ void half_edge::partiallyComputeQ(matrix4 *curr, const facet *ofct, int i){
         this->q = curr;
         this->ccw->opposite->partiallyComputeQ(curr,ofct,i-1);
     }
+}
+
+/** \brief Check if the HE is based on two vertices */
+bool half_edge::he_use_vertices(v3* p1, v3* p2){
+    return (p1==this->vert && p2==this->getCcw()) || (p2==this->vert && p1==this->getCcw()) ;
 }
 
 
