@@ -21,6 +21,11 @@ public:
     half_edge(v3* v,facet* f);
 
     void setCcw(half_edge* h);
+    void setCw(half_edge* h);
+    void setOpposite(half_edge* h);
+    //TODO ERASE if not use
+    //void setCcw(half_edge* h);
+    //void setCcw(half_edge* h);
 
     // ********************************************* //
     // ********************************************* //
@@ -68,6 +73,9 @@ public:
     void computeQ();
 
     matrix4 getQ();
+
+    /** \brief Check if the HE is based on two vertices */
+    bool he_use_vertices(v3* p1, v3* p2);
 
 
 private:
