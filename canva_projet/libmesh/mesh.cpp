@@ -82,11 +82,15 @@ namespace proj
     /**
      *  Selection criteria algorithm for edge collapse
      */
-    priority_queue<vertexpair> mesh::selection(){
-        priority_queue<vertexpair> pq;
+    bounded_priority_queue<vertexpair> mesh::selection(int n){
+        bounded_priority_queue<vertexpair> pq(n);
 
-        for (size_t i = 0; i < 500; ++i) {//v_vertices.size(); ++i) {
-            for (size_t j = 0; j < 500; ++j) {//v_vertices.size(); ++j) {
+        time_t t = time(0);
+
+        int limit = v_vertices.size();
+
+        for (size_t i = 0; i < limit; ++i) {
+            for (size_t j = i; j < limit; ++j) {
                 if(i != j) {
                     vertexpair auxpair(i, j, euclideanLength(v_vertices[i], v_vertices[j]));
                     pq.push(auxpair);
@@ -94,8 +98,9 @@ namespace proj
             }
         }
 
-        return pq;
+        cout << time(0)-t << " segundos" << endl;
 
+        return pq;
     }
 
 
@@ -166,22 +171,25 @@ namespace proj
 
     void mesh::simplification() {
         cout << "Size of vertices: " << v_vertices.size() << endl;
-        cout << "Size of normals: " << v_normal.size() << endl;
         cout << "Size of connectivity: " << v_connectivity.size() << endl;
         cout << "\n";
 
-        priority_queue<vertexpair> pq = selection();
+        int numToDelete = 1;
 
-        for(size_t i=0;i<1;++i) {
-            //vertexpair vertexToDelete = pq.pop();
-            //v_connectivity = updateTables(v_connectivity, vertexToDelete.vert1, vertexToDelete.vert2);
-            //pq.pop();
+        bounded_priority_queue<vertexpair> pq = selection(numToDelete);
+
+        for(size_t i=0;i<numToDelete;++i) {
+            vertexpair vertexToDelete = pq.pop();
+            v_connectivity = updateTables(v_connectivity, vertexToDelete.vert1, vertexToDelete.vert2);
+            cout << "Size of vertices: " << v_vertices.size() << endl;
+            cout << "Size of connectivity: " << v_connectivity.size() << endl;
+            cout << "\n";
         }
-
+/*
         cout << "Size of vertices: " << v_vertices.size() << endl;
-        cout << "Size of normals: " << v_normal.size() << endl;
         cout << "Size of connectivity: " << v_connectivity.size() << endl;
         cout << "\n";
+        */
     }
 
 
