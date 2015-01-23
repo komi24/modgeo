@@ -20,6 +20,9 @@ public:
               half_edge* cc, half_edge* c);
     half_edge(v3* v,facet* f);
 
+    half_edge(int v,facet* f); //new constructors
+    half_edge(int v);
+
     void setCcw(half_edge* h);
     void setCw(half_edge* h);
     void setOpposite(half_edge* h);
@@ -34,6 +37,7 @@ public:
     // ********************************************* //
     /** \brief Accessor to the vertex value */
     v3& getVert();
+    int getVertex();//TODO
 
     /** \brief Accessor to the facet value */
     facet& getFct();
@@ -92,6 +96,7 @@ private:
     /** Using pointers might save some time in destruction */
     /** \brief vertex */
     v3* vert;
+    int vertex;
     /** \brief facet */
     proj::facet* fct;
     /** \brief opposite half-edge */

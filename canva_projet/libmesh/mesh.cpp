@@ -444,6 +444,131 @@ namespace proj
         v_connectivity.push_back(u2);
     }
 
+    /** TODO our version */
+    void mesh::add_triangleHE(const int u0,const int u1,const int u2){
+
+        //Sort vertices according to ccw order
+
+        //Create three HE and link them together according to previous step
+
+        //look into he_list if the opposite is allready built using he.he_use_vert
+    }
+
+    void mesh::buildHEDS(){
+
+        //Copy all triangle in a todo list
+        std::deque<int> todoList(v_connectivity.begin(),v_connectivity.end());
+        std::deque<half_edge*> boundary;//deque because of the iterator invalidation rule
+        int p[3];
+        half_edge *he[6];
+        facet *curr;
+
+        std::cout << std::endl << "todoList.front()" << std::endl;
+        for(std::deque<int>::iterator ite = todoList.begin(); ite!=todoList.end(); ite++)
+            std::cout << *ite << std::endl;
+
+        //start with one triangle tranfered to the HE list /processing queue (boundary)
+        for(int i=0; i<3; i++) {
+            p[i]=todoList.front();
+            todoList.pop_front();
+        }
+        curr = new facet(p[0],p[1],p[2]);
+        //create  3 inner HE and 3 outter HE and link opposites
+        for(int i=0; i<3; i++){
+            he[i] = new half_edge(p[i],curr);//inner
+            he[i+3] = new half_edge(p[(i+1)%3]);//outter
+            he[i]->setOpposite(he[i+3]);
+            he[i+3]->setOpposite(he[i]);
+            //Save inner HE in this->h_edges
+            this->h_edges.push_back(he[i]);
+        }
+        //link inner HE and push_back outter HE in boundary
+        for(int i=0; i<3; i++){
+            he[i]->setCw(he[(i+1)%3]);
+            boundary.push_back(he[i+3]);
+        }
+        std::cout << std::endl << "todoList.front()" << std::endl;
+        for(std::deque<int>::iterator ite = todoList.begin(); ite!=todoList.end(); ite++)
+            std::cout << *ite << std::endl;
+
+        //search loop
+        std::deque<int>::iterator buf[3];//buffer of the current triangle
+        while(boundary.size()!=0){
+            std::cout << endl << "TAILLE = " << todoList.size() << endl;
+            he[0]=boundary.front();
+            p[0]=he[0]->getVertex();
+            p[1]=he[0]->getOpposite().getVertex();
+            //look for a triangle in todoList with p0 p1 as an edge
+            std::deque<int>::iterator it = todoList.begin();
+            int found1 = -3;//the choice of 3 is because i<3 and addition is fast
+            int found2 = -3;
+            //loop as long as we don't find triangle and there is still other triangles
+            while(((found1+found2)<0) && (it != todoList.end())){
+                //bufferize one triangle
+                for(int i=0; i<3; i++){
+                    found1 = (*it == p[0]) ? i : -3;//TODO take into account ABB (double occurence)
+                    found2 = (*it == p[1]) ? i : -3;
+                    buf[i]=it++;
+                }
+            }
+            if(found1+found2>0){
+                //If a triangle with the two vertices have been found
+                //find the other vertex
+                p[2]=*buf[3-found1-found2];
+                //Link inner HE and outter HE
+                curr = new facet(p[0],p[1],p[2]);
+                //create  2 inner HE and 2 outter HE and link opposites
+                //and push_back outter HE in boundary
+                for(int i=1; i<3; i++){
+                    he[i] = new half_edge(p[i],curr);
+                    he[i+3] = new half_edge(p[(i+1)%3]);
+                    he[i]->setOpposite(he[i+3]);
+                    he[i+1]->setOpposite(he[i]);
+                    boundary.push_back(he[i+3]);
+                }
+                //link inner HE
+                for(int i=0; i<3; i++){
+                    he[i]->setCw(he[(i+1)%3]);
+                }
+                //erase the triangle from todolist
+                todoList.erase(buf[0],buf[2]);
+            }
+            //if no triangle found erase the HE if not linkable
+            if(found1+found2<0){
+                //check if some outter HE can be opposite-linked to existing HE
+                std::deque<half_edge*>::iterator it1 = boundary.begin();
+                half_edge h1 = *(*it1);
+                half_edge h2 = h1.getOpposite();
+                half_edge h3 = he[0]->getOpposite();
+                while((h1.getVertex()!=h3.getVertex())
+                      &&(h2.getVertex()!=he[0]->getVertex())
+                      &&(it1 != boundary.end())){
+                    it1++;
+                    h1 = *(*it1);
+                    h2 = h1.getOpposite();
+                }
+                if((h1.getVertex()!=h3.getVertex())
+                        &&(h2.getVertex()!=he[0]->getVertex())){
+                    //delete both outter and link inners
+                    delete &h1;
+                    delete he[0];
+                    h3.setOpposite(&h2);
+                    h2.setOpposite(&h3);
+                }
+            }
+            //size of boundary --1 / Enlever le premier terme
+            boundary.pop_front();
+        }
+    }
+
+    void mesh::testHEDS(){
+        for(std::list<half_edge*>::iterator it = h_edges.begin();
+            it != h_edges.end(); it++)
+        {
+            std::cout << (*it) << std::endl;
+        }
+    }
+
     const vector<v2>& mesh::get_texture() const
     {
         return v_texture;

@@ -24,6 +24,7 @@
 #include <string>
 #include <half_edge.hpp>
 #include <queue>
+#include <list>
 
 
 
@@ -104,8 +105,13 @@ class mesh
             (updates half-edges) */
         void add_triangle(const int u0,const int u1,const int u2);
 
+        /** our version */
+        void add_triangleHE(const int u0,const int u1,const int u2);
+        void buildHEDS();
+        void testHEDS();
+
         /** \brief Update connectivity order (triangle strip) */
-        void update_strip();
+        void update_strip(); // TODO
 
 
         // ********************************************* //
@@ -252,7 +258,7 @@ class mesh
         /** TODO accesor/setters and management of update status */
 
         /** \brief half-edge structure */
-        std::vector<half_edge> h_edges;
+        std::list<half_edge*> h_edges;
 
         /** \brief Heap of pairs to give a simplify order */
         std::priority_queue<half_edge,std::vector<half_edge>,CompareHE> pq;

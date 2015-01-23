@@ -20,7 +20,15 @@ half_edge::half_edge(v3* v,facet* f)
     this->vert=v;
     this->fct=f;
 }
-
+half_edge::half_edge(int v,facet* f)
+{
+    this->fct=f;
+    this->vertex=v;
+}
+half_edge::half_edge(int v)
+{
+    this->vertex=v;
+}
 void half_edge::setCcw(half_edge* h){
     this->ccw=h;
 }
@@ -41,6 +49,7 @@ void half_edge::setOpposite(half_edge* h){
 // ********************************************* //
 /** \brief Accessor to the vertex value */
 v3& half_edge::getVert() {return *(this->vert); }
+int half_edge::getVertex() {return this->vertex; }
 
 /** \brief Accessor to the facet value */
 facet& half_edge::getFct() {return *(this->fct); }
@@ -110,7 +119,7 @@ void half_edge::partiallyComputeQ(matrix4 *curr, const facet *ofct, int i){
 
 /** \brief Check if the HE is based on two vertices */
 bool half_edge::he_use_vertices(v3* p1, v3* p2){
-    return (p1==this->vert && p2==this->getCcw()) || (p2==this->vert && p1==this->getCcw()) ;
+    return true;//TODO (p1==this->vert && p2==this->getCcw()) || (p2==this->vert && p1==this->getCcw()) ;
 }
 
 
