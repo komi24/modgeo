@@ -82,8 +82,8 @@ namespace proj
     /**
      *  Selection criteria algorithm for edge collapse
      */
-    bounded_priority_queue<vertexpair> mesh::selection(){
-        bounded_priority_queue<vertexpair> pq(10);
+    priority_queue<vertexpair> mesh::selection(){
+        priority_queue<vertexpair> pq;
 
         for (size_t i = 0; i < 500; ++i) {//v_vertices.size(); ++i) {
             for (size_t j = 0; j < 500; ++j) {//v_vertices.size(); ++j) {
@@ -170,11 +170,9 @@ namespace proj
         cout << "Size of connectivity: " << v_connectivity.size() << endl;
         cout << "\n";
 
-        bounded_priority_queue<vertexpair> pq = selection();
-        pq.pop_all();
+        priority_queue<vertexpair> pq = selection();
 
         for(size_t i=0;i<1;++i) {
-            //priority_queue<vertexpair> paux = pq.pop_all();
             //vertexpair vertexToDelete = pq.pop();
             //v_connectivity = updateTables(v_connectivity, vertexToDelete.vert1, vertexToDelete.vert2);
             //pq.pop();
