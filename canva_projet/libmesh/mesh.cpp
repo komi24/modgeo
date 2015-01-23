@@ -29,10 +29,16 @@
 #include <assert.h>
 #include <cstdlib>
 
+//TODO #include <half_edge.hpp>
+
 using namespace std;
 
 namespace proj
 {
+
+    mesh::mesh(){
+        //half_edge h(this);
+    }
 
     const vector<v3>& mesh::get_vertices() const{return v_vertices;}
     const vector<v3>& mesh::get_normal() const{return v_normal;}
@@ -464,8 +470,8 @@ namespace proj
         facet *curr;
 
         std::cout << std::endl << "todoList.front()" << std::endl;
-        for(std::deque<int>::iterator ite = todoList.begin(); ite!=todoList.end(); ite++)
-            std::cout << *ite << std::endl;
+        //TODO ERASE for(std::deque<int>::iterator ite = todoList.begin(); ite!=todoList.end(); ite++)
+        //    std::cout << *ite << std::endl;
 
         //start with one triangle tranfered to the HE list /processing queue (boundary)
         for(int i=0; i<3; i++) {
@@ -488,13 +494,12 @@ namespace proj
             boundary.push_back(he[i+3]);
         }
         std::cout << std::endl << "todoList.front()" << std::endl;
-        for(std::deque<int>::iterator ite = todoList.begin(); ite!=todoList.end(); ite++)
-            std::cout << *ite << std::endl;
+        //TODO ERASE for(std::deque<int>::iterator ite = todoList.begin(); ite!=todoList.end(); ite++)
+            //std::cout << *ite << std::endl;
 
         //search loop
         std::deque<int>::iterator buf[3];//buffer of the current triangle
         while(boundary.size()!=0){
-            std::cout << endl << "TAILLE = " << todoList.size() << endl;
             he[0]=boundary.front();
             p[0]=he[0]->getVertex();
             p[1]=he[0]->getOpposite().getVertex();
@@ -505,9 +510,11 @@ namespace proj
             //loop as long as we don't find triangle and there is still other triangles
             while(((found1+found2)<0) && (it != todoList.end())){
                 //bufferize one triangle
+                found1 = -3;
+                found2 = -3;
                 for(int i=0; i<3; i++){
-                    found1 = (*it == p[0]) ? i : -3;//TODO take into account ABB (double occurence)
-                    found2 = (*it == p[1]) ? i : -3;
+                    found1 = (*it == p[0]) ? i : found1;//TODO take into account ABB (double occurence)
+                    found2 = (*it == p[1]) ? i : found2;
                     buf[i]=it++;
                 }
             }
@@ -515,6 +522,12 @@ namespace proj
                 //If a triangle with the two vertices have been found
                 //find the other vertex
                 p[2]=*buf[3-found1-found2];
+                //TODO ERASE std::cout << endl << "TAILLE ok1 = " << todoList.size() << endl;
+                //std::cout << "TAILLE ok1 = " << h_edges.size() << endl;
+                //std::cout << "TAILLE ok1 = " << boundary.size() << endl;
+                //std::cout << " p[0] " << p[0] << " p[1] " << p[1] << " p[2] " << p[2] << endl;
+                //for(std::deque<half_edge*>::iterator ite = boundary.begin(); ite!=boundary.end(); ite++)
+                //    std::cout << (*ite)->getVertex() << "  " << (*ite)->getOpposite().getVertex() << std::endl;
                 //Link inner HE and outter HE
                 curr = new facet(p[0],p[1],p[2]);
                 //create  2 inner HE and 2 outter HE and link opposites
@@ -523,49 +536,64 @@ namespace proj
                     he[i] = new half_edge(p[i],curr);
                     he[i+3] = new half_edge(p[(i+1)%3]);
                     he[i]->setOpposite(he[i+3]);
-                    he[i+1]->setOpposite(he[i]);
+                    he[i+3]->setOpposite(he[i]);
                     boundary.push_back(he[i+3]);
+                    h_edges.push_back(he[i]);
                 }
+                h_edges.push_back(he[0]);
                 //link inner HE
                 for(int i=0; i<3; i++){
                     he[i]->setCw(he[(i+1)%3]);
                 }
                 //erase the triangle from todolist
-                todoList.erase(buf[0],buf[2]);
+                todoList.erase(buf[0],++buf[2]);
             }
             //if no triangle found erase the HE if not linkable
             if(found1+found2<0){
+                //TODO ERASE std::cout << endl << "TAILLE ok = " << todoList.size() << endl;
+                //std::cout <<"TAILLE ok = " << boundary.size() << endl;
+                //std::cout << "TAILLE ok = " << h_edges.size() << endl;
+                //std::cout << " p[0] " << he[0]->getVertex() << " p[1] " << he[0]->getOpposite().getVertex() << endl;
+                //for(std::deque<half_edge*>::iterator ite = boundary.begin(); ite!=boundary.end(); ite++)
+                //    std::cout << (*ite)->getVertex() << "  " << (*ite)->getOpposite().getVertex() << std::endl;
+
                 //check if some outter HE can be opposite-linked to existing HE
                 std::deque<half_edge*>::iterator it1 = boundary.begin();
                 half_edge h1 = *(*it1);
                 half_edge h2 = h1.getOpposite();
                 half_edge h3 = he[0]->getOpposite();
-                while((h1.getVertex()!=h3.getVertex())
-                      &&(h2.getVertex()!=he[0]->getVertex())
+                while(((h1.getVertex()!=h3.getVertex())
+                      ||(h2.getVertex()!=he[0]->getVertex()))
                       &&(it1 != boundary.end())){
                     it1++;
                     h1 = *(*it1);
                     h2 = h1.getOpposite();
                 }
-                if((h1.getVertex()!=h3.getVertex())
-                        &&(h2.getVertex()!=he[0]->getVertex())){
-                    //delete both outter and link inners
-                    delete &h1;
+                if((h1.getVertex()==h3.getVertex())
+                        &&(h2.getVertex()==he[0]->getVertex())){
+                    //delete both outters HE and link inners HE
+                    delete *it1;
+                    boundary.erase(it1);
                     delete he[0];
                     h3.setOpposite(&h2);
                     h2.setOpposite(&h3);
+                }else{
+                    delete he[0];
                 }
             }
             //size of boundary --1 / Enlever le premier terme
             boundary.pop_front();
         }
+        //TODO ERASE for(std::list<half_edge*>::iterator ite = h_edges.begin(); ite!=h_edges.end(); ite++)
+        //    std::cout << (*ite)->getVertex() << "  " << (*ite)->getOpposite().getVertex() << std::endl;
+
     }
 
     void mesh::testHEDS(){
         for(std::list<half_edge*>::iterator it = h_edges.begin();
             it != h_edges.end(); it++)
         {
-            std::cout << (*it) << std::endl;
+            std::cout << "Test 1 " << (*it)->evaluate() << std::endl;
         }
     }
 
