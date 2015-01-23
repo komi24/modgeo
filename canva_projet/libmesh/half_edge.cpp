@@ -20,6 +20,18 @@ half_edge::half_edge(v3* v,facet* f)
     this->vert=v;
     this->fct=f;
 }
+half_edge::half_edge(int v,facet* f)
+{
+    this->fct=f;
+    this->vertex=v;
+}
+half_edge::half_edge(int v)
+{
+    this->vertex=v;
+}
+//half_edge::half_edge(mesh *m1){
+//    this->m=m1;
+//}
 
 void half_edge::setVert(v3* v){
     this->vert=v;
@@ -45,6 +57,7 @@ void half_edge::setOpposite(half_edge* h){
 // ********************************************* //
 /** \brief Accessor to the vertex value */
 v3& half_edge::getVert() {return *(this->vert); }
+int half_edge::getVertex() {return this->vertex; }
 
 /** \brief Accessor to the facet value */
 facet& half_edge::getFct() {return *(this->fct); }
@@ -61,6 +74,17 @@ half_edge& half_edge::getCw() {return *(this->cw); }
 /** \brief Accessor to the Q matrix associated with the vertex */
 //TODO check if it's not allready computed
 matrix4& half_edge::getq() {return *(this->q); }
+
+/** \brief Accessor to the Q matrix associated with the vertex */
+/*v4& half_edge::getContraction() {
+    v4* contraction = new v4;
+    v3 buf=0.5*(m.get_vertices()[this->vertex]+this->opposite->vertex);
+    contraction->x() = buf[0];
+    contraction->y() = buf[1];
+    contraction->z() = buf[2];
+    contraction->w() = 1;
+    return contraction;
+}*/
 
 
 //TODO is the same as get Q
@@ -114,18 +138,14 @@ void half_edge::partiallyComputeQ(matrix4 *curr, const facet *ofct, int i){
 
 /** \brief Check if the HE is based on two vertices */
 bool half_edge::he_use_vertices(v3* p1, v3* p2){
-    return true;//p1==this->vert && p2==this->getCcw()) || (p2==this->vert && p1==this->getCcw()) ;
+    return true;//TODO (p1==this->vert && p2==this->getCcw()) || (p2==this->vert && p1==this->getCcw()) ;
 }
 
 
 double half_edge::evaluate(){
     this->computeQ();
-    v4* contraction = new v4;
-    contraction->x() = 0.5*(this->vert->x() + this->opposite->vert->x());
-    contraction->y() = 0.5*(this->vert->y() + this->opposite->vert->y());
-    contraction->z() = 0.5*(this->vert->z() + this->opposite->vert->z());
-    contraction->w() = 1;
-    return contraction->dot((this->getQ() + this->getOpposite().getQ())*(*contraction));
+    //v4 contraction = getContraction();
+    return 1.0;//contraction.dot((this->getQ() + this->getOpposite().getQ())*(contraction));
 }
 
 /** \brief Compare pair of vertice */

@@ -1,9 +1,10 @@
-#ifndef HALF_EDGE_HPP
-#define HALF_EDGE_HPP
-
+#include <mesh.hpp>
 #include <facet.hpp>
 #include <v3.hpp>
 #include <matrix4.hpp>
+
+#ifndef HALF_EDGE_HPP
+#define HALF_EDGE_HPP
 
 namespace proj
 {
@@ -21,6 +22,11 @@ public:
     half_edge(v3* v,facet* f);
 
     void setVert(v3* v);
+
+    half_edge(int v,facet* f); //new constructors
+    half_edge(int v);
+    //half_edge(mesh *m1);
+
     void setCcw(half_edge* h);
     void setCw(half_edge* h);
     void setOpposite(half_edge* h);
@@ -35,6 +41,7 @@ public:
     // ********************************************* //
     /** \brief Accessor to the vertex value */
     v3& getVert();
+    int getVertex();//TODO
 
     /** \brief Accessor to the facet value */
     facet& getFct();
@@ -51,7 +58,8 @@ public:
     /** \brief Accessor to the Q matrix associated with the vertex */
     matrix4& getq();
 
-
+    /** \brief Accessor to the contrated vector associated with the vertex */
+    //v4& getContraction();
 
 
     // ********************************************* //
@@ -93,6 +101,7 @@ private:
     /** Using pointers might save some time in destruction */
     /** \brief vertex */
     v3* vert;
+    int vertex;
     /** \brief facet */
     proj::facet* fct;
     /** \brief opposite half-edge */
@@ -105,6 +114,8 @@ private:
 
     /** \brief matrix linked to the vertex vert */
     matrix4* q;
+
+    //mesh *m;
 
     // ********************************************* //
     // ********************************************* //
