@@ -21,6 +21,10 @@ half_edge::half_edge(v3* v,facet* f)
     this->fct=f;
 }
 
+void half_edge::setVert(v3* v){
+    this->vert=v;
+}
+
 void half_edge::setCcw(half_edge* h){
     this->ccw=h;
 }
@@ -110,7 +114,7 @@ void half_edge::partiallyComputeQ(matrix4 *curr, const facet *ofct, int i){
 
 /** \brief Check if the HE is based on two vertices */
 bool half_edge::he_use_vertices(v3* p1, v3* p2){
-    return (p1==this->vert && p2==this->getCcw()) || (p2==this->vert && p1==this->getCcw()) ;
+    return true;//p1==this->vert && p2==this->getCcw()) || (p2==this->vert && p1==this->getCcw()) ;
 }
 
 
@@ -128,7 +132,7 @@ double half_edge::evaluate(){
 bool CompareHE::operator()(half_edge p1, half_edge p2)
 {
     //return p1.evaluate()<p2.evaluate();
-    return v3.norm2(p1.getVert()-p1.getOpposite().getVert()) < v3.norm2(p2.getVert()-p2.getOpposite().getVert());
+    return (p1.getVert()-p1.getOpposite().getVert()).norm2() < (p2.getVert()-p2.getOpposite().getVert()).norm2();
 }
 
 CompareHE::CompareHE(){

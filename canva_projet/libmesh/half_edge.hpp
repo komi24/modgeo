@@ -20,6 +20,7 @@ public:
               half_edge* cc, half_edge* c);
     half_edge(v3* v,facet* f);
 
+    void setVert(v3* v);
     void setCcw(half_edge* h);
     void setCw(half_edge* h);
     void setOpposite(half_edge* h);

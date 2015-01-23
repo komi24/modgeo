@@ -25,7 +25,8 @@
 #include <half_edge.hpp>
 #include <queue>
 
-
+#include <vertexpair.h>
+#include <bounded_priority_queue.h>
 
 namespace proj
 {
@@ -199,13 +200,12 @@ class mesh
         /** \brief load a off file */
         void load_file(const std::string &filename);
 
-
         // ********************************************* //
         // ********************************************* //
         //  Selection
         // ********************************************* //
         // ********************************************* //
-        void selection(int &vertexToDelete1, int &vertexToDelete2);
+        bounded_priority_queue<vertexpair> selection();
 
         // ********************************************* //
         // ********************************************* //

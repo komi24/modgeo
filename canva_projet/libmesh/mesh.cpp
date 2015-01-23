@@ -67,11 +67,29 @@ namespace proj
     // ********************************************* //
 
     /**
+     * Euclidean length between 2 vertex
+     */
+    double euclideanLength(v3 a, v3 b) {
+        return sqrt(pow(b.x()-a.x(),2) + pow(b.y()-a.y(),2) + pow(b.z()-a.z(),2));
+    }
+
+    /**
      *  Selection criteria algorithm for edge collapse
      */
-    void mesh::selection(int &vertexToDelete1, int &vertexToDelete2){
-        vertexToDelete1 = rand() % v_vertices.size() - 1;
-        vertexToDelete2 = vertexToDelete1+1;
+    bounded_priority_queue<vertexpair> mesh::selection(){
+        bounded_priority_queue<vertexpair> pq(10);
+
+        for (size_t i = 0; i < 500; ++i) {//v_vertices.size(); ++i) {
+            for (size_t j = 0; j < 500; ++j) {//v_vertices.size(); ++j) {
+                if(i != j) {
+                    vertexpair auxpair(i, j, euclideanLength(v_vertices[i], v_vertices[j]));
+                    pq.push(auxpair);
+                }
+            }
+        }
+
+        return pq;
+
     }
 
 
@@ -86,7 +104,7 @@ namespace proj
      */
     vector<int> mesh::updateTables(vector<int> v, int m, int n)
     {
-        v_vertices.erase(v_vertices.begin() + m);
+        v_vertices.erase(v_vertices.begin() + m); // en el 5889 peta
         v_normal.erase(v_normal.begin() + m);
 
         int a, b, c;
@@ -141,24 +159,19 @@ namespace proj
     }
 
     void mesh::simplification() {
-        int vertexToDelete1, vertexToDelete2;
-
         cout << "Size of vertices: " << v_vertices.size() << endl;
         cout << "Size of normals: " << v_normal.size() << endl;
         cout << "Size of connectivity: " << v_connectivity.size() << endl;
         cout << "\n";
 
-        /**
-         *  Pour voir les differents changements produits dans le maillage du dinosaure,
-         *  changer la façon d obtenir les variables [vertexToDelete]. On peut clicker
-         *  sur le bouton "Algo Simple" plusieurs fois, ainsi que changer la limite du
-         *  boucle "for" ci-dessous.
-         *  Les resultats sont etranges mais c est normal a cause de la pauvre selection
-         *  des vertices.
-         */
-        selection(vertexToDelete1, vertexToDelete2);
-        for(size_t i=0;i<50;++i) {
-            v_connectivity = updateTables(v_connectivity, vertexToDelete1, vertexToDelete2);
+        bounded_priority_queue<vertexpair> pq = selection();
+        pq.pop_all();
+
+        for(size_t i=0;i<1;++i) {
+            //priority_queue<vertexpair> paux = pq.pop_all();
+            //vertexpair vertexToDelete = pq.pop();
+            //v_connectivity = updateTables(v_connectivity, vertexToDelete.vert1, vertexToDelete.vert2);
+            //pq.pop();
         }
 
         cout << "Size of vertices: " << v_vertices.size() << endl;
