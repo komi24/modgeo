@@ -175,12 +175,97 @@ namespace proj
         return v;
     }
 
+    /**
+     * Updates the half edge list by removing the vertex M and the edge [MN]
+     */
+    list<half_edge*> mesh::updateHalfedges(list<half_edge*> he_list, int m, int n, int *update) {
+        int founded = 0;
+        half_edge* he;
+
+        /** Primero, buscamos el half edge con el indice m y cuyo opposite tenga el vertice con indice n */
+        for(list<half_edge*>::iterator pos = he_list.begin(); pos != he_list.end() && founded != 1; pos++) {
+            he = *pos;
+
+            if(he->getVertex() == m) {
+                if(he->getOpposite().getVertex() == n){
+                    cout << "Encontrado ;) !" << endl;
+                    founded = 1;
+                }
+            }
+
+        }
+
+        if(founded == 1) { /* Simplificamos el segmento [MN] */
+            half_edge mNextOpposite = he->getCw().getCw().getOpposite();
+            half_edge mPreviousOpposite = he->getCw().getOpposite();
+            half_edge nNextOpposite = he->getOpposite().getCw().getCw().getOpposite();
+            half_edge nPreviousOpposite = he->getOpposite().getCw().getOpposite();
+
+            // El opuesto del siguiente de M sera el opuesto del anterior a M
+            he->getCw().getCw().getOpposite() = mPreviousOpposite;
+
+            // El opuesto del anterior a M sera el opuesto del siguiente de M
+            he->getCw().getOpposite() = mNextOpposite;
+
+            // El opuesto del siguiente de N sera el opuesto del anterior a N
+            he->getOpposite().getCw().getCw().getOpposite() = nPreviousOpposite;
+
+            // El opuesto del anterior a N sera el opuesto del siguiente de N
+            he->getOpposite().getCw().getOpposite() = nNextOpposite;
+
+            // Reventamos de la lista los 2 entre M y N; los 2 siguientes; y los 2 anteriores
+            for(list<half_edge*>::iterator pos = he_list.begin(); pos != he_list.end(); pos++) {
+                he = *pos;
+                if( (he->getVertex() == m && he->getOpposite().getVertex() == n)                   // half-edge de m a n
+                  || (he->getVertex() == n && he->getOpposite().getVertex() == m)                  // half-edge de n a m
+                  || (he->getVertex() == n && he->getCw().getVertex() == m)                        // siguiente del half-edge de m a n
+                  || (he->getVertex() == m && he->getCw().getVertex() == n)                        // siguiente del half-edge de n a m
+                  || (he->getCw().getCw().getVertex() == m && he->getCw().getVertex() == n)        // anterior del half-edge de m a n
+                  || (he->getCw().getCw().getVertex() == n && he->getCw().getVertex() == m) ) {    // anterior del half-edge de n a m
+
+                    pos = he_list.erase(pos);
+
+                }
+            }
+
+            // We update the half edges list, to keep correspondance with the vertices vector
+            for (list<half_edge*>::iterator pos = he_list.begin(); pos != he_list.end(); pos++) {
+                he = *pos;
+                if(he->getVertex() > min(m,n))
+                    he->setVertex(he->getVertex()-1);
+            }
+
+
+            v_vertices.erase(v_vertices.begin() + m);
+            v_normal.erase(v_normal.begin() + m);
+        }
+
+        *update = founded;
+        return he_list;
+    }
+
+    vector<int> mesh::halfedgesToConnectivity(list<half_edge*> he_list) {
+        vector<int> result;
+        list<half_edge*>::iterator pos;
+
+        for(pos = he_list.begin(); pos != he_list.end(); pos++) {
+            half_edge* he = *pos;
+            result.push_back(he->getVertex());
+            result.push_back(he->getCw().getVertex());
+            result.push_back(he->getCw().getCw().getVertex());
+        }
+
+        return result;
+    }
+
     void mesh::simplification() {
+
         cout << "Size of vertices: " << v_vertices.size() << endl;
+        cout << "Size of half edges: " << h_edges.size() << endl;
         cout << "Size of connectivity: " << v_connectivity.size() << endl;
         cout << "\n";
 
-        int numToDelete = 200;
+        int numToDelete = 3;
 
         bounded_priority_queue<vertexpair> bounded_pq = selection(numToDelete);
         priority_queue<vertexpair> pq = bounded_pq.pop_all();
@@ -196,11 +281,8 @@ namespace proj
 
         int update = 0;
         int k;
-        int error = 0;
 
         for(int i=0;i<numToDelete;++i) {
-
-            if(vertexvector[i].vert1 != vertexvector[i].vert2) {
 
             if(update == 1) {
                 // We have to update the vertices in the heap
@@ -213,27 +295,21 @@ namespace proj
                 update = 0;
             }
 
+
             vertexpair vertexToDelete = vertexvector[i];
 
-            v_connectivity = updateTables(v_connectivity, vertexToDelete.vert1, vertexToDelete.vert2, &update, &error);
+            h_edges = updateHalfedges(h_edges, vertexToDelete.vert1, vertexToDelete.vert2, &update);
+            v_connectivity = halfedgesToConnectivity(h_edges);
+
             k = min(vertexToDelete.vert1, vertexToDelete.vert2);
-            if(error == 1) {
-                error = 0;
-                cout << "Error en el incide " << i << " de la tabla!!!!!" << endl;
-            }
 
-            }
 
-/*
             cout << "Size of vertices: " << v_vertices.size() << endl;
+            cout << "Size of half edges: " << h_edges.size() << endl;
             cout << "Size of connectivity: " << v_connectivity.size() << endl;
-            cout << "\n";*/
+            cout << "\n";
         }
-/*
-        cout << "Size of vertices: " << v_vertices.size() << endl;
-        cout << "Size of connectivity: " << v_connectivity.size() << endl;
-        cout << "\n";
-        */
+
     }
 
 
