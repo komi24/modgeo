@@ -265,7 +265,7 @@ namespace proj
         cout << "Size of connectivity: " << v_connectivity.size() << endl;
         cout << "\n";
 
-        int numToDelete = 1;
+        int numToDelete = 3;
 
         bounded_priority_queue<vertexpair> bounded_pq = selection(numToDelete);
         priority_queue<vertexpair> pq = bounded_pq.pop_all();
