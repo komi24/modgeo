@@ -23,6 +23,7 @@ public:
     half_edge(v3* v,facet* f);
 
     void setVert(v3* v);
+    void setVertex(int i);
 
     half_edge(int v,facet* f); //new constructors
     half_edge(int v);
@@ -57,6 +58,7 @@ public:
 
     /** \brief Accessor to the clockwise next (previous) half-edge */
     half_edge& getCw();
+    half_edge* getCwPtr();
 
     /** \brief Accessor to the Q matrix associated with the vertex */
     matrix4& getq();
@@ -83,6 +85,8 @@ public:
     /** \brief compute q for this half-edge and all
      * others associated to "vert" if needed */
     int computeQ();
+
+    void updateFacet(mesh *m);
 
     //TODO TO ERASE matrix4 getQ();
 
@@ -138,7 +142,7 @@ private:
 class CompareHE{
 public:
     CompareHE();
-    bool operator()(half_edge p1, half_edge p2);
+    bool operator()(half_edge *p1, half_edge *p2);
 };
 }
 #endif // HALF_EDGE_HPP

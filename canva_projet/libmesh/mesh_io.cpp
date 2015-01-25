@@ -91,6 +91,10 @@ mesh mesh_io::load_off_file(const std::string& filename)
 
     m.get_connectivity()=v_connectivity;
     m.get_vertices()=v_vertices;
+
+    //ajoutez
+    m.buildHEDS();
+
     return m;
 
 }
@@ -197,7 +201,7 @@ mesh mesh_io::load_obj_file(const std::string& filename)
     //m.get_connectivity()=v_connectivity;
    // m.get_vertices()=v_vertices;
     m.buildHEDS();
-    //m.testHEDS();
+    m.testHEDS();
     return m;
 
 }

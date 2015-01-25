@@ -109,6 +109,7 @@ class mesh
         /** our version */
         void add_triangleHE(const int u0,const int u1,const int u2);
         void buildHEDS();
+        void buildHeap();
         void testHEDS();
 
         /** \brief Update connectivity order (triangle strip) */
@@ -225,6 +226,9 @@ class mesh
         /** \brief create a simplified mesh */
         void simplification(); //TODO
 
+        /** \brief collapse an half-edge */
+        void edgeCollapse(half_edge *h);
+
     private:
 
         // ********************************************* //
@@ -261,7 +265,7 @@ class mesh
         std::list<half_edge*> h_edges;
 
         /** \brief Heap of pairs to give a simplify order */
-        std::priority_queue<half_edge,std::vector<half_edge>,CompareHE> pq;
+        std::priority_queue<half_edge*,std::vector<half_edge*>,CompareHE> pq;
 
 
 };

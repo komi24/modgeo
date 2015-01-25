@@ -532,6 +532,9 @@ namespace proj
         half_edge *he[6];
         facet *curr;
 
+        cout << "todolist "<<todoList.size() << endl;
+
+
         //TODO ERASE for(std::deque<int>::iterator ite = todoList.begin(); ite!=todoList.end(); ite++)
         //    std::cout << *ite << std::endl;
 
@@ -665,26 +668,60 @@ namespace proj
                     h3->setOpposite(h2);
                     h2->setOpposite(h3);
                 }else{
-                    //std::cout << "ERROR !!!!!!!!!!" <<std::endl;
+                    //std::cout << "non orientable ou bord ERROR !!!!!!!!!!" <<std::endl;
                     delete he[0];
                 }
             }
             //size of boundary --1 / Enlever le premier terme
             boundary.pop_front();
+            //cout << "*";//h_edges.size() << endl;
         }
-        cout << h_edges.size() << endl;
-        for(std::list<half_edge*>::iterator ite = h_edges.begin(); ite!=h_edges.end(); ite++)
-            std::cout << (*ite)->getVertex() << "  " << (*ite)->getOpposite().getVertex() << std::endl;
+        //cout << endl <<"he size "<< h_edges.size() << endl;
+        //for(std::list<half_edge*>::iterator ite = h_edges.begin(); ite!=h_edges.end(); ite++)
+            //std::cout << (*ite)->getVertex() << "  " << (*ite)->getOpposite().getVertex() << std::endl;
 
+        this->buildHeap();
     }
+
+    void mesh::buildHeap(){
+        for(std::list<half_edge*>::iterator ite = h_edges.begin(); ite!=h_edges.end(); ite++)
+            pq.push(*ite);
+        //cout << (pq.top())->getVertex() << "  " << (pq.top())->getOpposite().getVertex() << std::endl;
+        //cout << "val " << (pq.top())->evaluate() << std::endl;
+    }
+
+    /** \brief collapse the given edge */
+    void mesh::edgeCollapse(half_edge *h){
+        v4 *contract = h->getContraction();
+        int p1[3];
+
+        this->v_vertices[h->getVertex()]=contract->to_v3();
+        half_edge *curr = h->getOppositePtr();// TO DO delete and erase from vector op.vertex
+        curr->setVertex(h->getVertex());
+        curr = curr->getOppositePtr()->getCwPtr();
+        while (curr != h->getOppositePtr()) {
+            curr->setVertex(h->getVertex());
+            curr->updateFacet(this);
+            curr = curr->getOppositePtr()->getCwPtr();
+        }
+
+        //update facets around h
+        curr = h;
+        curr = curr->getOppositePtr()->getCwPtr();
+        while (curr != h->getOppositePtr()) {
+            curr->updateFacet(this);
+            curr = curr->getOppositePtr()->getCwPtr();
+        }
+    }
+
 
     void mesh::testHEDS(){
         int i =0;
         for(std::list<half_edge*>::iterator it = h_edges.begin();
             it != h_edges.end(); it++)
         {
-            std::cout << "Test evaluate "<< i<<"  val= " << (*it)->evaluate() << std::endl;
-            std::cout << "Test contraction "<< i++<<"  val= " << *((*it)->getContraction()) << std::endl;
+            //std::cout << "Test evaluate "<< i++<<"  val= " << (*it)->evaluate() << std::endl;
+            //std::cout << "Test contraction "<< i++<<"  val= " << *((*it)->getContraction()) << std::endl;
             //std::cout << "Test cw1 "<< i++<<"  val= " << (*it)->getVertex() << std::endl;
             //std::cout << "Test cw2 "<< i++<<"  val= " << (*it)->getOpposite().getVertex() << std::endl;
             //std::cout << "Test cw3 "<< i++<<"  val= " << (*it)->getCw().getVertex() << std::endl;

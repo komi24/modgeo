@@ -29,7 +29,7 @@ facet::facet(int p1, int p2, int p3, mesh* m){
     v3 buf3 = m->vertex(p1) - m->vertex(p3);
     buf2 = buf2.cross(buf3);
     buf2 = buf2.normalized();
-    this->q = new v4(buf2[0],buf2[1],buf2[2],buf1.dot(buf2));
+    this->q = new v4(buf2[0],buf2[1],buf2[2],-buf1.dot(buf2));
     //std::cout << "face " << p1 << " " << p2 << " " << p3 << " " << std::endl;
     //std::cout << "normal " << *q << std::endl;
 }
@@ -42,6 +42,21 @@ void facet::set(int index, int value){
         this->u2=value;
     case 2:
         this->u3=value;
+
+        break;
+    default:
+        break;
+    }
+}
+
+int facet::getVertex(int index){
+    switch (index) {
+    case 0:
+        return this->u1;
+    case 1:
+        return this->u2;
+    case 2:
+        return this->u3;
 
         break;
     default:

@@ -39,6 +39,10 @@ void half_edge::setVert(v3* v){
     this->vert=v;
 }
 
+void half_edge::setVertex(int i){
+    this->vertex=i;
+}
+
 void half_edge::setCcw(half_edge* h){
     this->ccw=h;
 }
@@ -76,6 +80,7 @@ half_edge& half_edge::getCcw() {return *(this->ccw); }
 
 /** \brief Accessor to the clockwise next (previous) half-edge */
 half_edge& half_edge::getCw() {return *(this->cw); }
+half_edge* half_edge::getCwPtr() {return this->cw; }
 
 /** \brief Accessor to the Q matrix associated with the vertex */
 //TODO check if it's not allready computed
@@ -122,13 +127,23 @@ int half_edge::computeQ(){
     c=tp[2];
     d=tp[3];
     this->q = new matrix4(a*a,a*b,a*c,a*d,
-                a*b,b*b,b*c,b*d,
-                a*c,b*c,c*c,c*d,
-                a*d,b*d,c*d,d*d);
+                          a*b,b*b,b*c,b*d,
+                          a*c,b*c,c*c,c*d,
+                          a*d,b*d,c*d,d*d);
     //std::cerr << "esssai2" <<std::endl<< *q <<std::endl;
     //std::cerr << " ok2 " << this->getCw().getVertex() << std::endl;
-    this->partiallyComputeQ(q,this->getOpposite().fct,10);//TODO REDO ERROR passage par référence ?
+    //std::cerr << " ok2 " << this->getVertex() << "  " << this->opposite->getVertex() << std::endl;
+    this->opposite->cw->partiallyComputeQ(q,this->fct,100);//TODO REDO ERROR passage par référence ?
     return 1;
+}
+
+void half_edge::updateFacet(mesh *m){
+    delete fct;
+    int p[3];
+    p[0]=vertex;
+    p[1]=cw->getVertex();
+    p[2]=cw->getCw().getVertex();
+    fct = new facet(p[0],p[1],p[2],m);
 }
 
 /** \brief compute the partial (for the facet) matrix Q
@@ -153,9 +168,15 @@ void half_edge::partiallyComputeQ(matrix4 *curr, const facet *ofct, int i){
         //std::cerr << "esssai1" <<std::endl<< *tmp <<std::endl;
         *(curr) += (*tmp);
         this->q = curr;
-        //std::cerr << " ok1 " << this->getCw().getVertex() << std::endl;
-        this->cw->opposite->partiallyComputeQ(curr,ofct,i-1);
+        //std::cerr << " ok1 " << this->getVertex() << "  " << this->opposite->getVertex() << std::endl;
+        this->opposite->cw->partiallyComputeQ(curr,ofct,i-1);
     }
+    //if(i ==0 ){
+    //    std::cerr << "suspect" << std::endl;
+    //}
+//    if(this->fct == ofct){
+//        std::cerr << "non suspect " << this->vertex << std::endl;
+//    }
 }
 
 /** \brief Check if the HE is based on two vertices */
@@ -178,10 +199,10 @@ double half_edge::evaluate(){
 }
 
 /** \brief Compare pair of vertice */
-bool CompareHE::operator()(half_edge p1, half_edge p2)
+bool CompareHE::operator()(half_edge *p1, half_edge *p2)
 {
-    //return p1.evaluate()<p2.evaluate();
-    return (p1.getVert()-p1.getOpposite().getVert()).norm2() < (p2.getVert()-p2.getOpposite().getVert()).norm2();
+    return p1->evaluate()<p2->evaluate();
+    //return (p1.getVert()-p1.getOpposite().getVert()).norm2() < (p2.getVert()-p2.getOpposite().getVert()).norm2();
 }
 
 CompareHE::CompareHE(){
