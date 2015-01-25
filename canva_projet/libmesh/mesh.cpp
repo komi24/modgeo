@@ -83,26 +83,19 @@ namespace proj
      *  Selection criteria algorithm for edge collapse
      */
     bounded_priority_queue<vertexpair> mesh::selection(int n){
-        bounded_priority_queue<vertexpair> pq(n);
+        bounded_priority_queue<vertexpair> pq(n);        
+        half_edge* he;
+        half_edge oppositeHe;
 
-        time_t t = time(0);
-
-        int limit = v_vertices.size();
-
-        for (int i = 0; i < limit; ++i) {
-            for (int j = i; j < limit; ++j) {
-                if(i != j) {
-                    vertexpair auxpair(i, j, euclideanLength(v_vertices[i], v_vertices[j]));
-                    pq.push(auxpair);
-                }
-            }
+        for(list<half_edge*>::iterator pos = h_edges.begin(); pos != h_edges.end(); pos++) {
+            he = *pos;
+            oppositeHe = he->getOpposite();
+            vertexpair auxpair(he->getVertex(), oppositeHe.getVertex(), euclideanLength(v_vertices[he->getVertex()], v_vertices[oppositeHe.getVertex()]));
+            pq.push(auxpair);
         }
-
-        cout << time(0)-t << " segundos" << endl;
 
         return pq;
     }
-
 
     // ********************************************* //
     // ********************************************* //
@@ -239,6 +232,9 @@ namespace proj
             v_vertices.erase(v_vertices.begin() + m);
             v_normal.erase(v_normal.begin() + m);
         }
+        else {
+            cout << "No encontrado! :(" << endl;
+        }
 
         *update = founded;
         return he_list;
@@ -265,7 +261,7 @@ namespace proj
         cout << "Size of connectivity: " << v_connectivity.size() << endl;
         cout << "\n";
 
-        int numToDelete = 3;
+        int numToDelete = 100;
 
         bounded_priority_queue<vertexpair> bounded_pq = selection(numToDelete);
         priority_queue<vertexpair> pq = bounded_pq.pop_all();
