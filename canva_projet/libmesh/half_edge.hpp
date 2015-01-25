@@ -28,7 +28,7 @@ public:
     half_edge(int v);
     static void setM(mesh* m1);
 
-    void setVertex(int v);
+    void setVertex(int i);
     void setCcw(half_edge* h);
     void setCw(half_edge* h);
     void setOpposite(half_edge* h);
