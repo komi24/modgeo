@@ -221,6 +221,8 @@ class mesh
 
         /** \brief Updates the vectors by removing the vertex M and the edge [MN] */
         std::vector<int> updateTables(std::vector<int> v, int m, int n, int *update, int *error);
+        std::list<half_edge*> updateHalfedges(std::list<half_edge *> he_list, int m, int n, int* update);
+        std::vector<int> halfedgesToConnectivity(std::list<half_edge*> he_list);
 
         /** \brief create a simplified mesh */
         void simplification(); //TODO

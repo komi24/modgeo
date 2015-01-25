@@ -34,6 +34,9 @@ half_edge::half_edge(int v)
 void half_edge::setM(mesh* m1){
     half_edge::m=m1;
 }
+void half_edge::setVertex(int v){
+    this->vertex=v;
+}
 
 void half_edge::setVert(v3* v){
     this->vert=v;

@@ -28,6 +28,7 @@ public:
     half_edge(int v);
     static void setM(mesh* m1);
 
+    void setVertex(int v);
     void setCcw(half_edge* h);
     void setCw(half_edge* h);
     void setOpposite(half_edge* h);
@@ -43,7 +44,7 @@ public:
     // ********************************************* //
     /** \brief Accessor to the vertex value */
     v3& getVert();
-    int getVertex();//TODO
+    int getVertex();
 
     /** \brief Accessor to the facet value */
     facet& getFct();
