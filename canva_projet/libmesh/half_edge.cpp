@@ -42,10 +42,6 @@ void half_edge::setVert(v3* v){
     this->vert=v;
 }
 
-void half_edge::setVertex(int i){
-    this->vertex=i;
-}
-
 void half_edge::setCcw(half_edge* h){
     this->ccw=h;
 }
