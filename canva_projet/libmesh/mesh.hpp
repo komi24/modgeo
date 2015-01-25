@@ -220,7 +220,7 @@ class mesh
         // ********************************************* //
 
         /** \brief Updates the vectors by removing the vertex M and the edge [MN] */
-        std::vector<int> updateTables(std::vector<int> v, int m, int n);
+        std::vector<int> updateTables(std::vector<int> v, int m, int n, int *update, int *error);
 
         /** \brief create a simplified mesh */
         void simplification(); //TODO
