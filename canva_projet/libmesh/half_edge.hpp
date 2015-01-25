@@ -23,7 +23,6 @@ public:
     half_edge(v3* v,facet* f);
 
     void setVert(v3* v);
-    void setVertex(int i);
 
     half_edge(int v,facet* f); //new constructors
     half_edge(int v);
