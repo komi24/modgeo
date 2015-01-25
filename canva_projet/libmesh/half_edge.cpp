@@ -3,6 +3,8 @@
 
 namespace proj {
 
+mesh* half_edge::m;
+
 half_edge::half_edge()
 {
 }
@@ -29,9 +31,9 @@ half_edge::half_edge(int v)
 {
     this->vertex=v;
 }
-//half_edge::half_edge(mesh *m1){
-//    this->m=m1;
-//}
+void half_edge::setM(mesh* m1){
+    half_edge::m=m1;
+}
 
 void half_edge::setCcw(half_edge* h){
     this->ccw=h;
@@ -43,6 +45,9 @@ void half_edge::setCw(half_edge* h){
 
 void half_edge::setOpposite(half_edge* h){
     this->opposite=h;
+}
+void half_edge::setFacet(facet* f){
+    this->fct=f;
 }
 
 
@@ -60,6 +65,7 @@ facet& half_edge::getFct() {return *(this->fct); }
 
 /** \brief Accessor to the opposite half-edge */
 half_edge& half_edge::getOpposite() {return *(this->opposite); }
+half_edge* half_edge::getOppositePtr() {return this->opposite; }
 
 /** \brief Accessor to the counter clockwise next half-edge */
 half_edge& half_edge::getCcw() {return *(this->ccw); }
@@ -72,20 +78,20 @@ half_edge& half_edge::getCw() {return *(this->cw); }
 matrix4& half_edge::getq() {return *(this->q); }
 
 /** \brief Accessor to the Q matrix associated with the vertex */
-/*v4& half_edge::getContraction() {
-    v4* contraction = new v4;
-    v3 buf=0.5*(m.get_vertices()[this->vertex]+this->opposite->vertex);
+v4* half_edge::getContraction() {
+    v4* contraction = new v4();
+    v3 buf=0.5*(half_edge::m->get_vertices()[this->vertex]+half_edge::m->get_vertices()[this->opposite->vertex]);
     contraction->x() = buf[0];
     contraction->y() = buf[1];
     contraction->z() = buf[2];
     contraction->w() = 1;
     return contraction;
-}*/
+}
 
 
 //TODO is the same as get Q
 //TO ERASE
-matrix4 half_edge::getQ(){
+/*matrix4 half_edge::getQ(){
     double a,b,c,d;
     v4 tp=this->fct->getq();
     a=tp[0];
@@ -98,13 +104,27 @@ matrix4 half_edge::getQ(){
                                a*c,b*c,c*c,c*d,
                                a*d,b*d,c*d,d*d);
     return *(temp);
-}
+}*/
 
 /** \brief compute the matrix Q anyway and update it
  * for other half-edges associated to vert */
-void half_edge::computeQ(){
-    this->q = new matrix4;
-    this->partiallyComputeQ(q,this->fct,10);//TODO REDO ERROR passage par référence ?
+int half_edge::computeQ(){
+    double a,b,c,d;
+    //std::cerr << "leke " << std::endl;
+    //std::cerr << "l " << this->fct->get1() << std::endl;
+    v4 tp=this->fct->getq();
+    a=tp[0];
+    b=tp[1];
+    c=tp[2];
+    d=tp[3];
+    this->q = new matrix4(a*a,a*b,a*c,a*d,
+                a*b,b*b,b*c,b*d,
+                a*c,b*c,c*c,c*d,
+                a*d,b*d,c*d,d*d);
+    //std::cerr << "esssai2" <<std::endl<< *q <<std::endl;
+    //std::cerr << " ok2 " << this->getCw().getVertex() << std::endl;
+    this->partiallyComputeQ(q,this->getOpposite().fct,10);//TODO REDO ERROR passage par référence ?
+    return 1;
 }
 
 /** \brief compute the partial (for the facet) matrix Q
@@ -122,13 +142,15 @@ void half_edge::partiallyComputeQ(matrix4 *curr, const facet *ofct, int i){
         b=tp[1];
         c=tp[2];
         d=tp[3];
-        matrix4 tmp(a*a,a*b,a*c,a*d,
+        matrix4 *tmp = new matrix4(a*a,a*b,a*c,a*d,
                     a*b,b*b,b*c,b*d,
                     a*c,b*c,c*c,c*d,
                     a*d,b*d,c*d,d*d);
-        *(curr) += tmp;
+        //std::cerr << "esssai1" <<std::endl<< *tmp <<std::endl;
+        *(curr) += (*tmp);
         this->q = curr;
-        this->ccw->opposite->partiallyComputeQ(curr,ofct,i-1);
+        //std::cerr << " ok1 " << this->getCw().getVertex() << std::endl;
+        this->cw->opposite->partiallyComputeQ(curr,ofct,i-1);
     }
 }
 
@@ -139,9 +161,16 @@ bool half_edge::he_use_vertices(v3* p1, v3* p2){
 
 
 double half_edge::evaluate(){
+    //std::cerr<< " err = " << this->computeQ() <<std::endl;
+    //std::cerr<< " err = " << this->getOpposite().computeQ() <<std::endl;
     this->computeQ();
-    //v4 contraction = getContraction();
-    return 1.0;//contraction.dot((this->getQ() + this->getOpposite().getQ())*(contraction));
+    this->getOpposite().computeQ();
+    v4 *contraction = getContraction();
+    //std::cerr << " ok3 " << *contraction <<std::endl;
+    //std::cerr << " ok1 " << std::endl << this->getOpposite().getq() <<std::endl;
+    //std::cerr << " ok3 " << std::endl << this->getq() <<std::endl;
+    //std::cerr << " ok3 " << contraction <<std::endl;
+    return contraction->dot((this->getq() + this->getOpposite().getq())*(*contraction));
 }
 
 /** \brief Compare pair of vertice */

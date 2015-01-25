@@ -53,7 +53,7 @@ void scene::load_model()
     }
     mesh_0.compute_normal();
 
-//    mesh_1.load_file("../data/dino_0.off");
+    //mesh_1.load_file("../data/dino_0.obj");
     mesh_1.load_file("../data/cube.obj");
     mesh_1.compute_normal();
     mesh_1.auto_scale();

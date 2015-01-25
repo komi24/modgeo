@@ -8,6 +8,7 @@
 
 namespace proj
 {
+    class mesh;
 
 /** \brief The half-ege data structure we chooose is an VE-structure
     according to the fact hat we will often have to find faces around
@@ -23,11 +24,12 @@ public:
 
     half_edge(int v,facet* f); //new constructors
     half_edge(int v);
-    //half_edge(mesh *m1);
+    static void setM(mesh* m1);
 
     void setCcw(half_edge* h);
     void setCw(half_edge* h);
     void setOpposite(half_edge* h);
+    void setFacet(facet* f);
     //TODO ERASE if not use
     //void setCcw(half_edge* h);
     //void setCcw(half_edge* h);
@@ -46,6 +48,7 @@ public:
 
     /** \brief Accessor to the opposite value */
     half_edge& getOpposite();
+    half_edge* getOppositePtr();
 
     /** \brief Accessor to the counter clockwise next half-edge */
     half_edge& getCcw();
@@ -57,7 +60,7 @@ public:
     matrix4& getq();
 
     /** \brief Accessor to the contrated vector associated with the vertex */
-    //v4& getContraction();
+    v4* getContraction();
 
 
     // ********************************************* //
@@ -77,13 +80,14 @@ public:
 
     /** \brief compute q for this half-edge and all
      * others associated to "vert" if needed */
-    void computeQ();
+    int computeQ();
 
-    matrix4 getQ();
+    //TODO TO ERASE matrix4 getQ();
 
     /** \brief Check if the HE is based on two vertices */
     bool he_use_vertices(v3* p1, v3* p2);
 
+    static mesh* m;
 
 private:
 
@@ -113,7 +117,6 @@ private:
     /** \brief matrix linked to the vertex vert */
     matrix4* q;
 
-    //mesh *m;
 
     // ********************************************* //
     // ********************************************* //

@@ -1,9 +1,5 @@
 #include "testhe.hpp"
 
-#include <half_edge.hpp>
-#include <facet.hpp>
-#include <mesh.hpp>
-
 using namespace proj;
 
 TestHE::TestHE()

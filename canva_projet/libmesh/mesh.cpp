@@ -37,7 +37,7 @@ namespace proj
 {
 
     mesh::mesh(){
-        //half_edge h(this);
+        half_edge::setM(this);
     }
 
     const vector<v3>& mesh::get_vertices() const{return v_vertices;}
@@ -469,16 +469,21 @@ namespace proj
         half_edge *he[6];
         facet *curr;
 
-        std::cout << std::endl << "todoList.front()" << std::endl;
         //TODO ERASE for(std::deque<int>::iterator ite = todoList.begin(); ite!=todoList.end(); ite++)
         //    std::cout << *ite << std::endl;
 
         //start with one triangle tranfered to the HE list /processing queue (boundary)
+
+        //std::cout << "tdolist"<<endl;
+        //for(std::deque<int>::iterator ite = todoList.begin(); ite!=todoList.end(); ite++)
+            //std::cout << (*ite) << std::endl;
+
         for(int i=0; i<3; i++) {
             p[i]=todoList.front();
             todoList.pop_front();
         }
-        curr = new facet(p[0],p[1],p[2]);
+
+        curr = new facet(p[0],p[1],p[2],this);
         //create  3 inner HE and 3 outter HE and link opposites
         for(int i=0; i<3; i++){
             he[i] = new half_edge(p[i],curr);//inner
@@ -493,7 +498,7 @@ namespace proj
             he[i]->setCw(he[(i+1)%3]);
             boundary.push_back(he[i+3]);
         }
-        std::cout << std::endl << "todoList.front()" << std::endl;
+        //std::cout << std::endl << "todoList.front()" << std::endl;
         //TODO ERASE for(std::deque<int>::iterator ite = todoList.begin(); ite!=todoList.end(); ite++)
             //std::cout << *ite << std::endl;
 
@@ -521,17 +526,20 @@ namespace proj
             if(found1+found2>0){
                 //If a triangle with the two vertices have been found
                 //find the other vertex
-                p[2]=*buf[3-found1-found2];
+                p[2]=*(buf[3-found1-found2]);
                 //TODO ERASE std::cout << endl << "TAILLE ok1 = " << todoList.size() << endl;
                 //std::cout << "TAILLE ok1 = " << h_edges.size() << endl;
-                //std::cout << "TAILLE ok1 = " << boundary.size() << endl;
                 //std::cout << " p[0] " << p[0] << " p[1] " << p[1] << " p[2] " << p[2] << endl;
+                //std::cout << "TAILLE ok1 = " << boundary.size() << endl;
                 //for(std::deque<half_edge*>::iterator ite = boundary.begin(); ite!=boundary.end(); ite++)
                 //    std::cout << (*ite)->getVertex() << "  " << (*ite)->getOpposite().getVertex() << std::endl;
                 //Link inner HE and outter HE
-                curr = new facet(p[0],p[1],p[2]);
+                curr = new facet(p[0],p[1],p[2],this);
                 //create  2 inner HE and 2 outter HE and link opposites
                 //and push_back outter HE in boundary
+                //and push_back inner HE in h_edges
+                h_edges.push_back(he[0]);
+                he[0]->setFacet(curr);
                 for(int i=1; i<3; i++){
                     he[i] = new half_edge(p[i],curr);
                     he[i+3] = new half_edge(p[(i+1)%3]);
@@ -540,7 +548,7 @@ namespace proj
                     boundary.push_back(he[i+3]);
                     h_edges.push_back(he[i]);
                 }
-                h_edges.push_back(he[0]);
+
                 //link inner HE
                 for(int i=0; i<3; i++){
                     he[i]->setCw(he[(i+1)%3]);
@@ -552,7 +560,7 @@ namespace proj
             if(found1+found2<0){
                 //TODO ERASE std::cout << endl << "TAILLE ok = " << todoList.size() << endl;
                 //std::cout <<"TAILLE ok = " << boundary.size() << endl;
-                //std::cout << "TAILLE ok = " << h_edges.size() << endl;
+                std::cout << "TAILLE ok = " << h_edges.size() << " ff "<< found1<< " " <<found2<< endl;
                 //std::cout << " p[0] " << he[0]->getVertex() << " p[1] " << he[0]->getOpposite().getVertex() << endl;
                 //for(std::deque<half_edge*>::iterator ite = boundary.begin(); ite!=boundary.end(); ite++)
                 //    std::cout << (*ite)->getVertex() << "  " << (*ite)->getOpposite().getVertex() << std::endl;
@@ -560,40 +568,62 @@ namespace proj
                 //check if some outter HE can be opposite-linked to existing HE
                 std::deque<half_edge*>::iterator it1 = boundary.begin();
                 half_edge h1 = *(*it1);
-                half_edge h2 = h1.getOpposite();
-                half_edge h3 = he[0]->getOpposite();
-                while(((h1.getVertex()!=h3.getVertex())
-                      ||(h2.getVertex()!=he[0]->getVertex()))
+                half_edge *h2 = h1.getOppositePtr();
+                half_edge *h3 = he[0]->getOppositePtr();
+                //std::cout << "bla" << endl;
+                //std::cout << " hes "<< h3->getVertex() << " " << h2->getVertex() << std::endl;
+                //std::cout << " hes "<< he[0]->getVertex() << " " << h1.getVertex() << std::endl;
+                while(((h1.getVertex()!=h3->getVertex())
+                      ||(h2->getVertex()!=he[0]->getVertex()))
                       &&(it1 != boundary.end())){
                     it1++;
+                    //std::cerr << "bla0" << endl;
                     h1 = *(*it1);
-                    h2 = h1.getOpposite();
+                    //std::cerr << "bla1" << endl;
+                    h2 = h1.getOppositePtr();
+                    //std::cerr << "bla2 " << h2->getVertex()<< endl;
+                    //std::cerr << "bla2 " << h3->getVertex()<< endl;
+                    //std::cerr << "bla2 " << h1.getVertex()<< endl;
+                    if (it1 == boundary.end()) cerr << "nooon !!" << endl;
                 }
-                if((h1.getVertex()==h3.getVertex())
-                        &&(h2.getVertex()==he[0]->getVertex())){
+                //std::cerr << "bla3" << endl;
+                if((h1.getVertex()==h3->getVertex())
+                        &&(h2->getVertex()==he[0]->getVertex())){
+                    //std::cout << "bla" << endl;
+                    //std::cout << " hes "<< h3->getVertex() << " " << h2->getVertex() << std::endl;
+                    //std::cout << " hes "<< he[0]->getVertex() << " " << h1.getVertex() << std::endl;
+                    //for(std::list<half_edge*>::iterator ite = h_edges.begin(); ite!=h_edges.end(); ite++)
+                        //std::cout << (*ite)->getVertex() << "  " << (*ite)->getOpposite().getVertex() << std::endl;
                     //delete both outters HE and link inners HE
                     delete *it1;
                     boundary.erase(it1);
                     delete he[0];
-                    h3.setOpposite(&h2);
-                    h2.setOpposite(&h3);
+                    h3->setOpposite(h2);
+                    h2->setOpposite(h3);
                 }else{
+                    //std::cout << "ERROR !!!!!!!!!!" <<std::endl;
                     delete he[0];
                 }
             }
             //size of boundary --1 / Enlever le premier terme
             boundary.pop_front();
         }
-        //TODO ERASE for(std::list<half_edge*>::iterator ite = h_edges.begin(); ite!=h_edges.end(); ite++)
-        //    std::cout << (*ite)->getVertex() << "  " << (*ite)->getOpposite().getVertex() << std::endl;
+        //for(std::list<half_edge*>::iterator ite = h_edges.begin(); ite!=h_edges.end(); ite++)
+            //std::cout << (*ite)->getVertex() << "  " << (*ite)->getOpposite().getVertex() << std::endl;
 
     }
 
     void mesh::testHEDS(){
+        int i =0;
         for(std::list<half_edge*>::iterator it = h_edges.begin();
             it != h_edges.end(); it++)
         {
-            std::cout << "Test 1 " << (*it)->evaluate() << std::endl;
+            std::cout << "Test evaluate "<< i<<"  val= " << (*it)->evaluate() << std::endl;
+            std::cout << "Test contraction "<< i++<<"  val= " << *((*it)->getContraction()) << std::endl;
+            //std::cout << "Test cw1 "<< i++<<"  val= " << (*it)->getVertex() << std::endl;
+            //std::cout << "Test cw2 "<< i++<<"  val= " << (*it)->getOpposite().getVertex() << std::endl;
+            //std::cout << "Test cw3 "<< i++<<"  val= " << (*it)->getCw().getVertex() << std::endl;
+            //std::cout << "Test cw4 "<< i++<<"  val= " << (*it)->getCw().getOpposite().getVertex() << std::endl;
         }
     }
 
