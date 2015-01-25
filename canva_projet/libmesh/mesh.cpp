@@ -699,7 +699,7 @@ namespace proj
             if(found1+found2<0){
                 //TODO ERASE std::cout << endl << "TAILLE ok = " << todoList.size() << endl;
                 //std::cout <<"TAILLE ok = " << boundary.size() << endl;
-                std::cout << "TAILLE ok = " << h_edges.size() << " ff "<< found1<< " " <<found2<< endl;
+                //std::cout << "TAILLE ok = " << h_edges.size() << " ff "<< found1<< " " <<found2<< endl;
                 //std::cout << " p[0] " << he[0]->getVertex() << " p[1] " << he[0]->getOpposite().getVertex() << endl;
                 //for(std::deque<half_edge*>::iterator ite = boundary.begin(); ite!=boundary.end(); ite++)
                 //    std::cout << (*ite)->getVertex() << "  " << (*ite)->getOpposite().getVertex() << std::endl;
@@ -709,21 +709,22 @@ namespace proj
                 half_edge h1 = *(*it1);
                 half_edge *h2 = h1.getOppositePtr();
                 half_edge *h3 = he[0]->getOppositePtr();
+                int compt =1;
                 //std::cout << "bla" << endl;
                 //std::cout << " hes "<< h3->getVertex() << " " << h2->getVertex() << std::endl;
                 //std::cout << " hes "<< he[0]->getVertex() << " " << h1.getVertex() << std::endl;
                 while(((h1.getVertex()!=h3->getVertex())
                       ||(h2->getVertex()!=he[0]->getVertex()))
-                      &&(it1 != boundary.end())){
-                    it1++;
-                    //std::cerr << "bla0" << endl;
+                      &&(++it1 != boundary.end())){
+                    //it1++;
+                    compt++;
+                    //std::cerr << compt << "bla0 " << boundary.size()<< endl;
                     h1 = *(*it1);
                     //std::cerr << "bla1" << endl;
                     h2 = h1.getOppositePtr();
                     //std::cerr << "bla2 " << h2->getVertex()<< endl;
                     //std::cerr << "bla2 " << h3->getVertex()<< endl;
                     //std::cerr << "bla2 " << h1.getVertex()<< endl;
-                    if (it1 == boundary.end()) cerr << "nooon !!" << endl;
                 }
                 //std::cerr << "bla3" << endl;
                 if((h1.getVertex()==h3->getVertex())
@@ -747,8 +748,9 @@ namespace proj
             //size of boundary --1 / Enlever le premier terme
             boundary.pop_front();
         }
-        //for(std::list<half_edge*>::iterator ite = h_edges.begin(); ite!=h_edges.end(); ite++)
-            //std::cout << (*ite)->getVertex() << "  " << (*ite)->getOpposite().getVertex() << std::endl;
+        cout << h_edges.size() << endl;
+        for(std::list<half_edge*>::iterator ite = h_edges.begin(); ite!=h_edges.end(); ite++)
+            std::cout << (*ite)->getVertex() << "  " << (*ite)->getOpposite().getVertex() << std::endl;
 
     }
 
