@@ -73,11 +73,34 @@ namespace proj
     // ********************************************* //
 
     /**
+     * Euclidean length between 2 vertex
+     */
+    double euclideanLength(v3 a, v3 b) {
+        return sqrt(pow(b.x()-a.x(),2) + pow(b.y()-a.y(),2) + pow(b.z()-a.z(),2));
+    }
+
+    /**
      *  Selection criteria algorithm for edge collapse
      */
-    void mesh::selection(int &vertexToDelete1, int &vertexToDelete2){
-        vertexToDelete1 = rand() % v_vertices.size() - 1;
-        vertexToDelete2 = vertexToDelete1+1;
+    bounded_priority_queue<vertexpair> mesh::selection(int n){
+        bounded_priority_queue<vertexpair> pq(n);
+
+        time_t t = time(0);
+
+        int limit = v_vertices.size();
+
+        for (int i = 0; i < limit; ++i) {
+            for (int j = i; j < limit; ++j) {
+                if(i != j) {
+                    vertexpair auxpair(i, j, euclideanLength(v_vertices[i], v_vertices[j]));
+                    pq.push(auxpair);
+                }
+            }
+        }
+
+        cout << time(0)-t << " segundos" << endl;
+
+        return pq;
     }
 
 
@@ -90,13 +113,15 @@ namespace proj
     /**
      * Updates the vectors by removing the vertex M and the edge [MN]
      */
-    vector<int> mesh::updateTables(vector<int> v, int m, int n)
+    vector<int> mesh::updateTables(vector<int> v, int m, int n, int *update, int *error)
     {
         v_vertices.erase(v_vertices.begin() + m);
         v_normal.erase(v_normal.begin() + m);
 
         int a, b, c;
         bool am, an, bm, bn, cm, cn;
+
+        int CONTADOR = 0;
 
         size_t vSize = v.size();
         int indexToDelete1 = -1;
@@ -122,8 +147,11 @@ namespace proj
                     indexToDelete1 = i;
                 else if(indexToDelete2 == -1)
                     indexToDelete2 = i;
-                else
-                    cout << "Error in connectivity table!!!" << endl;
+                else {
+                    *error = 1;
+                    CONTADOR++;
+                    cout << "Error in connectivity table!!!" << CONTADOR << endl;
+                }
             } else {
                 // Only one vertex will change, we will take care of it after
             }
@@ -132,6 +160,7 @@ namespace proj
         // We erase the faces
         if(indexToDelete1 != -1) {
             v.erase(v.begin()+indexToDelete1,v.begin()+indexToDelete1+3);
+            *update = 1;
 
             if(indexToDelete2 != -1)
                 v.erase(v.begin()+indexToDelete2-3,v.begin()+indexToDelete2);
@@ -147,30 +176,64 @@ namespace proj
     }
 
     void mesh::simplification() {
-        int vertexToDelete1, vertexToDelete2;
-
         cout << "Size of vertices: " << v_vertices.size() << endl;
-        cout << "Size of normals: " << v_normal.size() << endl;
         cout << "Size of connectivity: " << v_connectivity.size() << endl;
         cout << "\n";
 
-        /**
-         *  Pour voir les differents changements produits dans le maillage du dinosaure,
-         *  changer la façon d obtenir les variables [vertexToDelete]. On peut clicker
-         *  sur le bouton "Algo Simple" plusieurs fois, ainsi que changer la limite du
-         *  boucle "for" ci-dessous.
-         *  Les resultats sont etranges mais c est normal a cause de la pauvre selection
-         *  des vertices.
-         */
-        selection(vertexToDelete1, vertexToDelete2);
-        for(size_t i=0;i<50;++i) {
-            v_connectivity = updateTables(v_connectivity, vertexToDelete1, vertexToDelete2);
+        int numToDelete = 200;
+
+        bounded_priority_queue<vertexpair> bounded_pq = selection(numToDelete);
+        priority_queue<vertexpair> pq = bounded_pq.pop_all();
+
+        vector<vertexpair> vertexvector;
+        vertexvector.resize(numToDelete);
+
+        for (size_t i = 0; i < vertexvector.size(); ++i) {
+            vertexpair tmp = pq.top();
+            pq.pop();
+            vertexvector[i] = tmp;
         }
 
+        int update = 0;
+        int k;
+        int error = 0;
+
+        for(int i=0;i<numToDelete;++i) {
+
+            if(vertexvector[i].vert1 != vertexvector[i].vert2) {
+
+            if(update == 1) {
+                // We have to update the vertices in the heap
+                for (size_t j = i; j < vertexvector.size(); ++j) {
+                    if(vertexvector[j].vert1 > k)
+                        vertexvector[j].vert1 = vertexvector[j].vert1 - 1;
+                    if(vertexvector[j].vert2 > k)
+                        vertexvector[j].vert2 = vertexvector[j].vert2 - 1;
+                }
+                update = 0;
+            }
+
+            vertexpair vertexToDelete = vertexvector[i];
+
+            v_connectivity = updateTables(v_connectivity, vertexToDelete.vert1, vertexToDelete.vert2, &update, &error);
+            k = min(vertexToDelete.vert1, vertexToDelete.vert2);
+            if(error == 1) {
+                error = 0;
+                cout << "Error en el incide " << i << " de la tabla!!!!!" << endl;
+            }
+
+            }
+
+/*
+            cout << "Size of vertices: " << v_vertices.size() << endl;
+            cout << "Size of connectivity: " << v_connectivity.size() << endl;
+            cout << "\n";*/
+        }
+/*
         cout << "Size of vertices: " << v_vertices.size() << endl;
-        cout << "Size of normals: " << v_normal.size() << endl;
         cout << "Size of connectivity: " << v_connectivity.size() << endl;
         cout << "\n";
+        */
     }
 
 

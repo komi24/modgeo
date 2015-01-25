@@ -22,6 +22,8 @@ public:
               half_edge* cc, half_edge* c);
     half_edge(v3* v,facet* f);
 
+    void setVert(v3* v);
+
     half_edge(int v,facet* f); //new constructors
     half_edge(int v);
     static void setM(mesh* m1);

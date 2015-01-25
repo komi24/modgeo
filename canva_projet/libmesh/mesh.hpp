@@ -26,7 +26,8 @@
 #include <queue>
 #include <list>
 
-
+#include <vertexpair.h>
+#include <bounded_priority_queue.h>
 
 namespace proj
 {
@@ -205,13 +206,12 @@ class mesh
         /** \brief load a off file */
         void load_file(const std::string &filename);
 
-
         // ********************************************* //
         // ********************************************* //
         //  Selection
         // ********************************************* //
         // ********************************************* //
-        void selection(int &vertexToDelete1, int &vertexToDelete2);
+        bounded_priority_queue<vertexpair> selection(int n);
 
         // ********************************************* //
         // ********************************************* //
@@ -220,7 +220,7 @@ class mesh
         // ********************************************* //
 
         /** \brief Updates the vectors by removing the vertex M and the edge [MN] */
-        std::vector<int> updateTables(std::vector<int> v, int m, int n);
+        std::vector<int> updateTables(std::vector<int> v, int m, int n, int *update, int *error);
 
         /** \brief create a simplified mesh */
         void simplification(); //TODO

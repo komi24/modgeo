@@ -15,7 +15,6 @@ int main(int argc,char *argv[])
 
         TestHE *t = new TestHE();
         t->runTest();
-        std::cout<<"saluut uh ha!"<<std::endl;
 
         return app.exec();
     }

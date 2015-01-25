@@ -35,6 +35,10 @@ void half_edge::setM(mesh* m1){
     half_edge::m=m1;
 }
 
+void half_edge::setVert(v3* v){
+    this->vert=v;
+}
+
 void half_edge::setCcw(half_edge* h){
     this->ccw=h;
 }
@@ -176,7 +180,8 @@ double half_edge::evaluate(){
 /** \brief Compare pair of vertice */
 bool CompareHE::operator()(half_edge p1, half_edge p2)
 {
-    return p1.evaluate()<p2.evaluate();
+    //return p1.evaluate()<p2.evaluate();
+    return (p1.getVert()-p1.getOpposite().getVert()).norm2() < (p2.getVert()-p2.getOpposite().getVert()).norm2();
 }
 
 CompareHE::CompareHE(){
