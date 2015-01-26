@@ -90,8 +90,10 @@ namespace proj
         for(list<half_edge*>::iterator pos = h_edges.begin(); pos != h_edges.end(); pos++) {
             he = *pos;
             oppositeHe = he->getOpposite();
-            vertexpair auxpair(he->getVertex(), oppositeHe.getVertex(), euclideanLength(v_vertices[he->getVertex()], v_vertices[oppositeHe.getVertex()]));
-            pq.push(auxpair);
+            if(he->getVertex() != oppositeHe.getVertex()) {
+                vertexpair auxpair(he->getVertex(), oppositeHe.getVertex(), euclideanLength(v_vertices[he->getVertex()], v_vertices[oppositeHe.getVertex()]));
+                pq.push(auxpair);
+            }
         }
 
         return pq;
@@ -113,8 +115,6 @@ namespace proj
 
         int a, b, c;
         bool am, an, bm, bn, cm, cn;
-
-        int CONTADOR = 0;
 
         size_t vSize = v.size();
         int indexToDelete1 = -1;
@@ -142,8 +142,7 @@ namespace proj
                     indexToDelete2 = i;
                 else {
                     *error = 1;
-                    CONTADOR++;
-                    cout << "Error in connectivity table!!!" << CONTADOR << endl;
+                    cout << "Error in connectivity table!!!" << endl;
                 }
             } else {
                 // Only one vertex will change, we will take care of it after
@@ -175,46 +174,43 @@ namespace proj
         int founded = 0;
         half_edge* he;
 
-        /** Primero, buscamos el half edge con el indice m y cuyo opposite tenga el vertice con indice n */
+        /** First, we look for the half edge with vertex m and ending in n */
         for(list<half_edge*>::iterator pos = he_list.begin(); pos != he_list.end() && founded != 1; pos++) {
             he = *pos;
-
             if(he->getVertex() == m) {
                 if(he->getOpposite().getVertex() == n){
-                    cout << "Encontrado ;) !" << endl;
                     founded = 1;
                 }
             }
-
         }
 
-        if(founded == 1) { /* Simplificamos el segmento [MN] */
-            half_edge mNextOpposite = he->getCw().getCw().getOpposite();
-            half_edge mPreviousOpposite = he->getCw().getOpposite();
-            half_edge nNextOpposite = he->getOpposite().getCw().getCw().getOpposite();
-            half_edge nPreviousOpposite = he->getOpposite().getCw().getOpposite();
+        if(founded == 1) { /* We simplify the edge [MN] */
+            half_edge mNextOpposite = he->getCw().getOpposite();
+            half_edge mPreviousOpposite = he->getCw().getCw().getOpposite();
+            half_edge nNextOpposite = he->getOpposite().getCw().getOpposite();
+            half_edge nPreviousOpposite = he->getOpposite().getCw().getCw().getOpposite();
 
-            // El opuesto del siguiente de M sera el opuesto del anterior a M
-            he->getCw().getCw().getOpposite() = mPreviousOpposite;
+            // The opposite of the next of M will be the opposite of the previous to M
+            he->getCw().setOpposite(&mPreviousOpposite);
 
-            // El opuesto del anterior a M sera el opuesto del siguiente de M
-            he->getCw().getOpposite() = mNextOpposite;
+            // The opposite of the previous to M will be the opposite of the next of M
+            he->getCw().getCw().setOpposite(&mNextOpposite);
 
-            // El opuesto del siguiente de N sera el opuesto del anterior a N
-            he->getOpposite().getCw().getCw().getOpposite() = nPreviousOpposite;
+            // The opposite of the next of N will be the opposite of the previous to N
+            he->getOpposite().getCw().setOpposite(&nPreviousOpposite);
 
-            // El opuesto del anterior a N sera el opuesto del siguiente de N
-            he->getOpposite().getCw().getOpposite() = nNextOpposite;
+            // The opposite of the previous to N will be the opposite of the next of N
+            he->getOpposite().getCw().getCw().setOpposite(&nNextOpposite);
 
-            // Reventamos de la lista los 2 entre M y N; los 2 siguientes; y los 2 anteriores
+            // We erase from the list the both half edges between M and N; both nexts; and both previous
             for(list<half_edge*>::iterator pos = he_list.begin(); pos != he_list.end(); pos++) {
                 he = *pos;
-                if( (he->getVertex() == m && he->getOpposite().getVertex() == n)                   // half-edge de m a n
-                  || (he->getVertex() == n && he->getOpposite().getVertex() == m)                  // half-edge de n a m
-                  || (he->getVertex() == n && he->getCw().getVertex() == m)                        // siguiente del half-edge de m a n
-                  || (he->getVertex() == m && he->getCw().getVertex() == n)                        // siguiente del half-edge de n a m
-                  || (he->getCw().getCw().getVertex() == m && he->getCw().getVertex() == n)        // anterior del half-edge de m a n
-                  || (he->getCw().getCw().getVertex() == n && he->getCw().getVertex() == m) ) {    // anterior del half-edge de n a m
+                if( (he->getVertex() == m && he->getOpposite().getVertex() == n)                   // half-edge from m to n
+                  || (he->getVertex() == n && he->getOpposite().getVertex() == m)                  // half-edge from n to m
+                  || (he->getVertex() == n && he->getCw().getCw().getVertex() == m)                // next of half-edge from m to n
+                  || (he->getVertex() == m && he->getCw().getCw().getVertex() == n)                // next of half-edge from n to m
+                  || (he->getCw().getVertex() == m && he->getCw().getCw().getVertex() == n)        // previous of half-edge from m to n
+                  || (he->getCw().getVertex() == n && he->getCw().getCw().getVertex() == m) ) {    // previous of half-edge from n to m
 
                     pos = he_list.erase(pos);
 
@@ -229,11 +225,8 @@ namespace proj
             }
 
 
-            v_vertices.erase(v_vertices.begin() + m);
-            v_normal.erase(v_normal.begin() + m);
-        }
-        else {
-            cout << "No encontrado! :(" << endl;
+            v_vertices.erase(v_vertices.begin() + min(m,n));
+            v_normal.erase(v_normal.begin() + min(m,n));
         }
 
         *update = founded;
@@ -261,7 +254,7 @@ namespace proj
         cout << "Size of connectivity: " << v_connectivity.size() << endl;
         cout << "\n";
 
-        int numToDelete = 100;
+        int numToDelete = 10;
 
         bounded_priority_queue<vertexpair> bounded_pq = selection(numToDelete);
         priority_queue<vertexpair> pq = bounded_pq.pop_all();
@@ -281,7 +274,7 @@ namespace proj
         for(int i=0;i<numToDelete;++i) {
 
             if(update == 1) {
-                // We have to update the vertices in the heap
+                // We have to update the vertices in the table
                 for (size_t j = i; j < vertexvector.size(); ++j) {
                     if(vertexvector[j].vert1 > k)
                         vertexvector[j].vert1 = vertexvector[j].vert1 - 1;
