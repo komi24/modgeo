@@ -24,6 +24,7 @@ public:
 
     /** \brief  simplification */
     void simplification();
+    void simplification2();
 
     /** \brief Method called only once at the beginning (load off files ...) */
     void load_model();

@@ -24,11 +24,15 @@ half_edge::half_edge(v3* v,facet* f)
 }
 half_edge::half_edge(int v,facet* f)
 {
+    this->q = new matrix4();
+    this->contraction = new v4();
     this->fct=f;
     this->vertex=v;
 }
 half_edge::half_edge(int v)
 {
+    this->contraction = new v4();
+    this->q = new matrix4();
     this->vertex=v;
 }
 void half_edge::setM(mesh* m1){
@@ -70,6 +74,7 @@ int half_edge::getVertex() {return this->vertex; }
 
 /** \brief Accessor to the facet value */
 facet& half_edge::getFct() {return *(this->fct); }
+facet* half_edge::getFacet() {return this->fct; }
 
 /** \brief Accessor to the opposite half-edge */
 half_edge& half_edge::getOpposite() {return *(this->opposite); }
@@ -88,12 +93,23 @@ matrix4& half_edge::getq() {return *(this->q); }
 
 /** \brief Accessor to the Q matrix associated with the vertex */
 v4* half_edge::getContraction() {
-    v4* contraction = new v4();
     v3 buf=0.5*(half_edge::m->get_vertices()[this->vertex]+half_edge::m->get_vertices()[this->opposite->vertex]);
+    //std::cout <<"pas1 "<< buf << std::endl;
     contraction->x() = buf[0];
     contraction->y() = buf[1];
     contraction->z() = buf[2];
     contraction->w() = 1;
+    //std::cout << "pas2 "<< *contraction << std::endl;
+    return contraction;
+}
+v4* half_edge::getContraction(mesh *m) {
+    v3 buf=0.5*(m->get_vertices()[this->vertex]+m->get_vertices()[this->opposite->vertex]);
+    //std::cout << "test1 " << buf << std::endl;
+    contraction->x() = buf[0];
+    contraction->y() = buf[1];
+    contraction->z() = buf[2];
+    contraction->w() = 1;
+    //std::cout << "test2 " << *contraction << std::endl;
     return contraction;
 }
 
@@ -126,6 +142,7 @@ int half_edge::computeQ(){
     b=tp[1];
     c=tp[2];
     d=tp[3];
+    delete this->q;
     this->q = new matrix4(a*a,a*b,a*c,a*d,
                           a*b,b*b,b*c,b*d,
                           a*c,b*c,c*c,c*d,
@@ -138,7 +155,7 @@ int half_edge::computeQ(){
 }
 
 void half_edge::updateFacet(mesh *m){
-    delete fct;
+    //delete fct;
     int p[3];
     p[0]=vertex;
     p[1]=cw->getVertex();

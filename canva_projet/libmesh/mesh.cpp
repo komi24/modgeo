@@ -28,6 +28,7 @@
 #include <list>
 #include <assert.h>
 #include <cstdlib>
+#include <set>
 
 //TODO #include <half_edge.hpp>
 
@@ -756,38 +757,164 @@ namespace proj
         //for(std::list<half_edge*>::iterator ite = h_edges.begin(); ite!=h_edges.end(); ite++)
             //std::cout << (*ite)->getVertex() << "  " << (*ite)->getOpposite().getVertex() << std::endl;
 
-        this->buildHeap();
+        //this->buildHeap();
     }
 
     void mesh::buildHeap(){
+        //cerr << "0k1.1 "<< pq2->size() << endl;
+/*        while(!pq2->empty()){
+            cerr << "0k1.1 "<< pq2->size() << endl;
+            pq2->pop();
+            cerr << pq2->size()<<endl;
+        }*/
+        pq2 = new priority_queue<half_edge*,std::vector<half_edge*>,CompareHE>();
+        cerr << "0k1.2 "<<endl;
         for(std::list<half_edge*>::iterator ite = h_edges.begin(); ite!=h_edges.end(); ite++)
-            pq.push(*ite);
-        //cout << (pq.top())->getVertex() << "  " << (pq.top())->getOpposite().getVertex() << std::endl;
-        //cout << "val " << (pq.top())->evaluate() << std::endl;
+            pq2->push(*ite);
+        //cout << (pq2->top())->getVertex() << "  " << (pq2->top())->getOpposite().getVertex() << std::endl;
+        //cout << "val " << (pq2->top())->evaluate() << std::endl;
     }
 
     /** \brief collapse the given edge */
     void mesh::edgeCollapse(half_edge *h){
-        v4 *contract = h->getContraction();
+        if(h->getOppositePtr()->getCwPtr()->getCwPtr()->getVertex() == h->getCwPtr()->getCwPtr()->getVertex())
+        {
+            cerr << "limite" <<endl;
+            return;
+        }
+        v4 *contract = h->getContraction(this);
         int p1[3];
+        int xoxo=1000;
+        /* TO ERASE
+        cout << "ok22 " << h->getOppositePtr()->getCwPtr()->getCwPtr()->getVertex() << endl;
+        cout << "ok23 " << h->getOppositePtr()->getCwPtr()->getVertex() << endl;
+        cout << "ok24 " << h->getOppositePtr()->getVertex() << endl;
+
+        cout << "ok32 " << h->getCwPtr()->getCwPtr()->getVertex() << endl;
+        cout << "ok23 " << h->getCwPtr()->getVertex() << endl;
+        cerr << "ok34 " << h->getVertex() << endl;
+        cin >> xoxo;
+        cout << "ok" <<endl;
+        cout << "wating "<< h_edges.size() << endl;
+        cout << "ok21 " << h->getVertex() << "  " << h->getOppositePtr()->getVertex() << endl;
+        cout << "test00" <<endl;
+        cin >> xoxo;
+        cout << "ok" <<endl;*/
 
         this->v_vertices[h->getVertex()]=contract->to_v3();
+        //cout << *contract <<endl;
+        //cout << "test10" <<endl;
+        //cin >> xoxo;
+        //cout << "ok" <<endl;
+
         half_edge *curr = h->getOppositePtr();// TO DO delete and erase from vector op.vertex
         curr->setVertex(h->getVertex());
         curr = curr->getOppositePtr()->getCwPtr();
-        while (curr != h->getOppositePtr()) {
+        while ((curr != h->getOppositePtr()) && (xoxo-- > 0)){
+            /* TO ERASE cout << "testk" << xoxo-- <<endl;
+            cout << "ok22 " << h->getOppositePtr()->getCwPtr()->getCwPtr()->getVertex() << endl;
+            cout << "ok23 " << h->getOppositePtr()->getCwPtr()->getVertex() << endl;
+            cout << "ok24 " << h->getOppositePtr()->getVertex() << endl;
+
+            cout << "ok32 " << h->getCwPtr()->getCwPtr()->getVertex() << endl;
+            cout << "ok23 " << h->getCwPtr()->getVertex() << endl;
+            cout << "ok34 " << h->getVertex() << endl;
+            cout << "wating "<< endl;
+            cin >> xoxo;
+            cout << "ok" <<endl;*/
             curr->setVertex(h->getVertex());
             curr->updateFacet(this);
             curr = curr->getOppositePtr()->getCwPtr();
+        }
+        if(xoxo <0){
+            cerr << "oups !!!!!!" << endl;
+            return;
         }
 
         //update facets around h
         curr = h;
         curr = curr->getOppositePtr()->getCwPtr();
-        while (curr != h->getOppositePtr()) {
+        //cout << "test2" <<endl;
+        //cin >> xoxo;
+        //cout << "ok" <<endl;
+        xoxo=1000;
+        while ((curr != h) && (xoxo--!=0)) {
+            /*cout << "testR" << xoxo-- <<endl;
+            cout << "ok22 " << h->getOppositePtr()->getCwPtr()->getCwPtr()->getVertex() << endl;
+            cout << "ok23 " << h->getOppositePtr()->getCwPtr()->getVertex() << endl;
+            cout << "ok24 " << h->getOppositePtr()->getVertex() << endl;
+
+            cout << "ok32 " << h->getCwPtr()->getCwPtr()->getVertex() << endl;
+            cout << "ok23 " << h->getCwPtr()->getVertex() << endl;
+            cout << "ok34 " << h->getVertex() << endl;
+            cout << "wating "<< endl;
+            cin >> xoxo;
+            cout << "ok" <<endl;*/
             curr->updateFacet(this);
             curr = curr->getOppositePtr()->getCwPtr();
         }
+        if(xoxo <0){
+            cerr << "oups !!!!!!" << endl;
+            return;
+        }
+        //cout << "test3" <<endl;
+        //cin >> xoxo;
+        //cout << "ok" <<endl;
+
+        //modify structure
+        h->getCwPtr()->getOppositePtr()->setOpposite(h->getCwPtr()->getCwPtr()->getOppositePtr());
+        h->getCwPtr()->getCwPtr()->getOppositePtr()->setOpposite(h->getCwPtr()->getOppositePtr());
+
+        h->getOppositePtr()->getCwPtr()->getOppositePtr()->setOpposite(h->getOppositePtr()->getCwPtr()->getCwPtr()->getOppositePtr());
+        h->getOppositePtr()->getCwPtr()->getCwPtr()->getOppositePtr()->setOpposite(h->getOppositePtr()->getCwPtr()->getOppositePtr());
+
+        /*cout << "ok22 " << h->getOppositePtr()->getCwPtr()->getCwPtr()->getVertex() << endl;
+        cout << "ok23 " << h->getOppositePtr()->getCwPtr()->getVertex() << endl;
+        cout << "ok24 " << h->getOppositePtr()->getVertex() << endl;
+
+        cout << "ok32 " << h->getCwPtr()->getCwPtr()->getVertex() << endl;
+        cout << "ok23 " << h->getCwPtr()->getVertex() << endl;
+        cout << "ok34 " << h->getVertex() << endl;
+        cout << "exited"<<endl;*/
+
+        //TODO delete
+        h_edges.remove(h->getOppositePtr()->getCwPtr()->getCwPtr());
+        h_edges.remove(h->getOppositePtr()->getCwPtr());
+        h_edges.remove(h->getOppositePtr());
+
+        h_edges.remove(h->getCwPtr()->getCwPtr());
+        h_edges.remove(h->getCwPtr());
+        h_edges.remove(h);
+
+    }
+
+    void mesh::simplification2(){
+
+        half_edge::m =this;
+        std::set<facet*> forbidden;
+        int inut;
+        buildHeap();
+        for (int i=0 ; i< 10; i++){
+            //cin >> inut;
+            //cerr << "ok3"<<endl;
+            if(forbidden.count(this->pq2->top()->getFacet())==0)
+            {
+                forbidden.insert(pq2->top()->getFacet());
+                forbidden.insert(pq2->top()->getOppositePtr()->getFacet());
+                forbidden.insert(pq2->top()->getCwPtr()->getOppositePtr()->getFacet());
+                forbidden.insert(pq2->top()->getCwPtr()->getCwPtr()->getOppositePtr()->getFacet());
+
+                edgeCollapse(this->pq2->top());
+                v_connectivity = halfedgesToConnectivity(h_edges);
+                cerr << v_connectivity.size() <<endl;
+            } else {
+                cerr << "hey !!" <<endl;
+                //i--;
+            }
+            pq2->pop();
+        }
+        delete pq2;
+        cerr << "exited" <<endl;
     }
 
 

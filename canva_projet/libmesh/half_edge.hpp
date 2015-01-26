@@ -48,6 +48,7 @@ public:
 
     /** \brief Accessor to the facet value */
     facet& getFct();
+    facet* getFacet();
 
     /** \brief Accessor to the opposite value */
     half_edge& getOpposite();
@@ -65,6 +66,7 @@ public:
 
     /** \brief Accessor to the contrated vector associated with the vertex */
     v4* getContraction();
+    v4* getContraction(mesh *m);
 
 
     // ********************************************* //
@@ -122,6 +124,8 @@ private:
 
     /** \brief matrix linked to the vertex vert */
     matrix4* q;
+
+    v4 *contraction;
 
 
     // ********************************************* //

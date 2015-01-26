@@ -85,5 +85,5 @@ void Window::simple_algo_button_clicked()
 }
 void Window::optimized_algo_button_clicked()
 {
-    window_debug->show();
+    this->glWidget->current_scene.simplification2();
 }

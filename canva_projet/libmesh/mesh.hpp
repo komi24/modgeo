@@ -25,6 +25,7 @@
 #include <half_edge.hpp>
 #include <queue>
 #include <list>
+#include <set>
 
 #include <vertexpair.h>
 #include <bounded_priority_queue.h>
@@ -227,6 +228,7 @@ class mesh
 
         /** \brief create a simplified mesh */
         void simplification(); //TODO
+        void simplification2();
 
         /** \brief collapse an half-edge */
         void edgeCollapse(half_edge *h);
@@ -268,6 +270,7 @@ class mesh
 
         /** \brief Heap of pairs to give a simplify order */
         std::priority_queue<half_edge*,std::vector<half_edge*>,CompareHE> pq;
+        std::priority_queue<half_edge*,std::vector<half_edge*>,CompareHE> *pq2;
 
 
 };

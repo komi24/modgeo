@@ -274,10 +274,11 @@ namespace proj
         double epsilon=1e-6;
 
         double n=norm();
-        if(n<epsilon)
+        if(n<epsilon){
             std::cerr << "division par zero dans v3.cpp 278" <<std::endl;
             return *this/(n+1e-5);
             // TO De comment throw exception_v3("norm=0",__FILE__,__FUNCTION__,__LINE__);
+        }
         return *this/n;
     }
     void v3::scale(const double& sx,const double& sy,const double& sz)

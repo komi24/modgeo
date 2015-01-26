@@ -14,7 +14,7 @@ void TestHE::runTest(){
     // p4 = 0 1 1;
     // p5 = 0 0.5 0.5;
 
-    v3 *p[5];
+    /*v3 *p[5];
     p[0] = new v3(0,0,0);
     p[1] = new v3(0,0,1);
     p[2] = new v3(0,1,0);
@@ -39,6 +39,6 @@ void TestHE::runTest(){
     for (int i=0; i<4; i++){
         he[i+8] = new half_edge(p[i],fct[(i-1)%4]);
 
-    }
+    }*/
 
 }

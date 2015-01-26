@@ -55,7 +55,8 @@ void scene::load_model()
 
 //    mesh_1.load_file("../data/cube.obj");
 //    mesh_1.load_file("../data/dino_0.obj");
-    mesh_1.load_file("../data/tux.off");
+//    mesh_1.load_file("../data/tux.off");
+    mesh_1.load_file("../data/gourd.obj");
     mesh_1.compute_normal();
     mesh_1.auto_scale();
     mesh_1.scale(0.1,0.1,0.1);
@@ -124,5 +125,8 @@ void scene::simplification(){
     this->mesh_1.simplification();
 }
 
+void scene::simplification2(){
+    this->mesh_1.simplification2();
+}
 
 
